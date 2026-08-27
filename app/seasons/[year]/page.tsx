@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getDerived, getSeason } from "@/lib/archive";
+import {
+  getDerived,
+  getSeason,
+  getSeasonGames,
+  getDraftBoard,
+} from "@/lib/archive";
 
 export async function generateStaticParams() {
   const derived = await getDerived();
@@ -30,8 +35,15 @@ export default async function SeasonPage({
 }) {
   const { year: yearParam } = await params;
   const year = Number(yearParam);
-  const [season, derived] = await Promise.all([getSeason(year), getDerived()]);
+  const [season, derived, games, draft] = await Promise.all([
+    getSeason(year),
+    getDerived(),
+    getSeasonGames(year),
+    getDraftBoard(year),
+  ]);
   if (!season) notFound();
+  const weeks = [...new Set(games.map((g) => g.week))].sort((a, b) => a - b);
+  const rounds = [...new Set(draft.map((p) => p.round))].sort((a, b) => a - b);
 
   const slugOf = new Map(
     Object.values(derived.franchises).map((f) => [f.id, f.slug]),
@@ -90,7 +102,7 @@ export default async function SeasonPage({
           <h2 className="plate mb-3">Final Standings</h2>
           <div className="space-y-6">
             {season.standings.map((div) => (
-              <div key={div.name} className="panel overflow-x-auto">
+              <div key={div.name} className="panel overflow-x-auto" tabIndex={0} role="region" aria-label={`${div.name} final standings`}>
                 <table className="w-full text-sm">
                   <caption className="text-left text-cream font-semibold px-4 pt-3 pb-1">
                     {div.name}
@@ -170,6 +182,85 @@ export default async function SeasonPage({
           </section>
         )}
       </div>
+
+      {weeks.length > 0 && (
+        <section className="mt-12">
+          <h2 className="plate mb-4">Every Game, Every Week</h2>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {weeks.map((wk) => (
+              <div key={wk} className="panel p-4 min-w-0">
+                <p className="text-sm text-cream font-semibold mb-2">
+                  Week {wk}
+                  {wk > season.regularWeeks && (
+                    <span className="text-amber font-normal"> · playoffs</span>
+                  )}
+                </p>
+                <ul className="space-y-1.5 text-sm">
+                  {games
+                    .filter((g) => g.week === wk)
+                    .map((g) => {
+                      const awayWon = g.away.pts > g.home.pts;
+                      return (
+                        <li key={g.id}>
+                          <Link
+                            href={`/seasons/${year}/games/${g.id}`}
+                            className="flex justify-between gap-2 hover:text-amber text-parch"
+                          >
+                            <span className="truncate">
+                              <span className={awayWon ? "text-cream" : undefined}>
+                                {g.away.name}
+                              </span>{" "}
+                              at{" "}
+                              <span className={awayWon ? undefined : "text-cream"}>
+                                {g.home.name}
+                              </span>
+                            </span>
+                            <span className="whitespace-nowrap">
+                              {g.away.pts.toFixed(1)}–{g.home.pts.toFixed(1)}
+                            </span>
+                          </Link>
+                        </li>
+                      );
+                    })}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-parch mt-3">
+            Every score links to the full box score, lineups and all.
+          </p>
+        </section>
+      )}
+
+      {rounds.length > 0 && (
+        <section className="mt-12">
+          <h2 className="plate mb-4">Draft Board</h2>
+          {/* Native details: collapsed in the server HTML and opens without
+              JavaScript, so there is no hydration layout shift. */}
+          <div className="space-y-2">
+            {rounds.map((round) => (
+              <details key={round} className="panel" open={round === 1}>
+                <summary className="cursor-pointer px-4 py-3 text-cream text-sm font-semibold">
+                  Round {round}
+                </summary>
+                <ol className="px-4 pb-4 grid gap-x-8 gap-y-1 sm:grid-cols-2 text-sm">
+                  {draft
+                    .filter((p) => p.round === round)
+                    .map((p, i) => (
+                      <li key={i} className="flex justify-between gap-3">
+                        <span className="text-cream truncate">
+                          {p.player}{" "}
+                          <span className="text-parch text-xs">{p.pos}</span>
+                        </span>
+                        <span className="text-parch truncate">{p.team}</span>
+                      </li>
+                    ))}
+                </ol>
+              </details>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

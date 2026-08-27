@@ -140,6 +140,57 @@ export default async function Home() {
             </section>
           )}
 
+          <section>
+            <h2 className="plate mb-3">From the Record Book</h2>
+            <ul className="panel p-4 space-y-3 text-sm">
+              {derived.records.highWeeks[0] && (
+                <li>
+                  <span className="text-parch">Highest week ever:</span>{" "}
+                  <span className="text-cream">
+                    {derived.records.highWeeks[0].name},{" "}
+                    {derived.records.highWeeks[0].pts.toFixed(2)}
+                  </span>{" "}
+                  <span className="text-parch">
+                    ({derived.records.highWeeks[0].year})
+                  </span>
+                </li>
+              )}
+              {derived.records.nailBiters[0] && (
+                <li>
+                  <span className="text-parch">Closest game:</span>{" "}
+                  <span className="text-cream">
+                    {Math.abs(
+                      derived.records.nailBiters[0].away.pts -
+                        derived.records.nailBiters[0].home.pts,
+                    ).toFixed(2)}{" "}
+                    points
+                  </span>{" "}
+                  <span className="text-parch">
+                    ({derived.records.nailBiters[0].year})
+                  </span>
+                </li>
+              )}
+              {derived.records.playerHighs[0] && (
+                <li>
+                  <span className="text-parch">Best game ever started:</span>{" "}
+                  <span className="text-cream">
+                    {derived.records.playerHighs[0].player},{" "}
+                    {derived.records.playerHighs[0].pts.toFixed(2)}
+                  </span>{" "}
+                  <span className="text-parch">
+                    ({derived.records.playerHighs[0].year})
+                  </span>
+                </li>
+              )}
+            </ul>
+            <Link
+              href="/records"
+              className="inline-block mt-2 text-sm text-amber underline underline-offset-4 hover:no-underline"
+            >
+              The whole record book
+            </Link>
+          </section>
+
           {transactions.length > 0 && (
             <section>
               <h2 className="plate mb-3">Latest Moves</h2>

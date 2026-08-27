@@ -3,26 +3,34 @@
 // re-polls every 60 seconds while the tab is open so Sunday afternoon feels
 // live. The fetch-cache on the API route (30s) means polling costs
 // Fleaflicker at most two calls a minute no matter how many people watch.
+// Every card links to the live box score page for that game.
 import { useEffect, useState } from "react";
-import type { Scoreboard, LiveGame } from "@/lib/live";
+import Link from "next/link";
+import type { Scoreboard, LiveGame, LiveScore } from "@/lib/live";
+import { CURRENT_SEASON } from "@/lib/league";
 
 function Side({
   name,
-  pts,
+  score,
   winning,
+  started,
 }: {
   name: string;
-  pts: string | null;
+  score: LiveScore | undefined;
   winning: boolean;
+  started: boolean;
 }) {
+  const pts = started ? (score?.score?.formatted ?? null) : null;
+  const left = score?.yetToPlay ?? 0;
   return (
     <div className="flex items-baseline justify-between gap-3">
       <span className={winning ? "text-cream font-semibold" : "text-parch"}>
         {name}
+        {started && left > 0 && (
+          <span className="text-xs text-parch font-normal"> · {left} left</span>
+        )}
       </span>
-      <span
-        className={`text-lg ${winning ? "text-amber font-bold" : "text-parch"}`}
-      >
+      <span className={`text-lg ${winning ? "text-amber font-bold" : "text-parch"}`}>
         {pts ?? "–"}
       </span>
     </div>
@@ -30,8 +38,6 @@ function Side({
 }
 
 function GameCard({ game }: { game: LiveGame }) {
-  const a = game.awayScore?.score?.formatted ?? null;
-  const h = game.homeScore?.score?.formatted ?? null;
   const av = game.awayScore?.score?.value ?? 0;
   const hv = game.homeScore?.score?.value ?? 0;
   const inPlay =
@@ -40,16 +46,35 @@ function GameCard({ game }: { game: LiveGame }) {
   // existing does not mean the game started.
   const started = Boolean(game.isFinalScore) || inPlay || av + hv > 0;
   return (
-    <div className="panel p-4 flex flex-col gap-2">
-      <Side name={game.away.name} pts={started ? a : null} winning={started && av > hv} />
-      <Side name={game.home.name} pts={started ? h : null} winning={started && hv > av} />
+    <Link
+      href={`/seasons/${CURRENT_SEASON}/games/${game.id}`}
+      className="panel p-4 flex flex-col gap-2 hover:border-amber transition-colors"
+    >
+      <Side
+        name={game.away.name}
+        score={game.awayScore}
+        winning={started && av > hv}
+        started={started}
+      />
+      <Side
+        name={game.home.name}
+        score={game.homeScore}
+        winning={started && hv > av}
+        started={started}
+      />
       <p className="text-xs text-parch pt-1 border-t border-edge flex justify-between">
         <span>{game.isDivisional ? "Division game" : "Cross-division"}</span>
         <span className={inPlay ? "text-win" : undefined}>
-          {game.isFinalScore ? "Final" : inPlay ? "Live" : started ? "In progress" : "Not started"}
+          {game.isFinalScore
+            ? "Final"
+            : inPlay
+              ? "Live"
+              : started
+                ? "In progress"
+                : "Not started"}
         </span>
       </p>
-    </div>
+    </Link>
   );
 }
 
@@ -84,9 +109,7 @@ export default function LiveScoreboard({
   }
   return (
     <div>
-      {week !== null && (
-        <p className="plate mb-3">Week {week}</p>
-      )}
+      {week !== null && <p className="plate mb-3">Week {week}</p>}
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {games.map((g) => (
           <GameCard key={g.id} game={g} />

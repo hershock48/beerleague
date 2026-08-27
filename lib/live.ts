@@ -104,6 +104,15 @@ export async function getRosters(): Promise<TeamRoster[]> {
   }));
 }
 
+/** Live box score for a current-season game, straight from the API. */
+export function getLiveBoxRaw(gameId: string): Promise<unknown | null> {
+  if (!/^\d+$/.test(gameId)) return Promise.resolve(null);
+  return fetchJson<unknown>(
+    apiUrl("FetchLeagueBoxscore", { fantasy_game_id: gameId }),
+    60,
+  );
+}
+
 export interface Transaction {
   timeEpochMilli?: string;
   transaction?: {

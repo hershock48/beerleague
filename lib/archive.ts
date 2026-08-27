@@ -1,7 +1,7 @@
 // Server-only readers for the committed archive in data/.
 // Everything historical renders from these; nothing here touches the network.
 import "server-only";
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 
 const DATA = path.join(process.cwd(), "data");
@@ -136,18 +136,112 @@ export async function getSeason(year: number): Promise<SeasonSummary | null> {
   return d.seasons.find((s) => s.year === year) ?? null;
 }
 
-export async function getSeasonWeek(year: number, week: number): Promise<unknown> {
-  return JSON.parse(
-    await readFile(path.join(DATA, "seasons", String(year), `week-${week}.json`), "utf8"),
-  );
+export interface SeasonGame {
+  id: string;
+  week: number;
+  isPlayoff: boolean;
+  away: GameSide;
+  home: GameSide;
 }
 
-export async function getDraft(year: number): Promise<unknown | null> {
+/**
+ * Every completed game of a season, from the archived week files.
+ * Build-time only (season and game pages are SSG); nothing calls this at
+ * request time on Vercel, where data/seasons is not in the bundle.
+ */
+export async function getSeasonGames(year: number): Promise<SeasonGame[]> {
+  const dir = path.join(DATA, "seasons", String(year));
+  let files: string[];
+  try {
+    files = (await readdir(dir)).filter((f) => f.startsWith("week-"));
+  } catch {
+    return [];
+  }
+  const season = await getSeason(year);
+  const regularWeeks = season?.regularWeeks ?? 13;
+  const games: SeasonGame[] = [];
+  for (const file of files) {
+    const week = Number(file.match(/\d+/)?.[0] ?? 0);
+    const board = JSON.parse(await readFile(path.join(dir, file), "utf8")) as {
+      games?: {
+        id: string;
+        away: { id: number; name: string };
+        home: { id: number; name: string };
+        awayScore?: { score?: { value?: number } };
+        homeScore?: { score?: { value?: number } };
+      }[];
+    };
+    for (const g of board.games ?? []) {
+      const as = g.awayScore?.score?.value;
+      const hs = g.homeScore?.score?.value;
+      if (as === undefined || hs === undefined || (as === 0 && hs === 0)) continue;
+      games.push({
+        id: String(g.id),
+        week,
+        isPlayoff: week > regularWeeks,
+        away: { id: g.away.id, name: g.away.name, pts: as },
+        home: { id: g.home.id, name: g.home.name, pts: hs },
+      });
+    }
+  }
+  return games.sort((a, b) => a.week - b.week);
+}
+
+export async function getArchivedBox(
+  year: number,
+  gameId: string,
+): Promise<unknown | null> {
+  // gameId comes from the URL; keep it from escaping the box directory.
+  if (!/^\d+$/.test(gameId)) return null;
   try {
     return JSON.parse(
-      await readFile(path.join(DATA, "seasons", String(year), "draft.json"), "utf8"),
+      await readFile(
+        path.join(DATA, "seasons", String(year), "box", `${gameId}.json`),
+        "utf8",
+      ),
     );
   } catch {
     return null;
   }
+}
+
+export interface DraftPick {
+  round: number;
+  team: string;
+  teamId: number;
+  player: string;
+  pos: string;
+}
+
+export async function getDraftBoard(year: number): Promise<DraftPick[]> {
+  let raw: {
+    rows?: {
+      round?: number;
+      cells?: {
+        team?: { id?: number; name?: string };
+        player?: { proPlayer?: { nameFull?: string; position?: string } };
+      }[];
+    }[];
+  };
+  try {
+    raw = JSON.parse(
+      await readFile(path.join(DATA, "seasons", String(year), "draft.json"), "utf8"),
+    );
+  } catch {
+    return [];
+  }
+  const picks: DraftPick[] = [];
+  for (const row of raw.rows ?? []) {
+    for (const cell of row.cells ?? []) {
+      if (!cell.player?.proPlayer?.nameFull || !cell.team?.name) continue;
+      picks.push({
+        round: row.round ?? 0,
+        team: cell.team.name,
+        teamId: cell.team.id ?? 0,
+        player: cell.player.proPlayer.nameFull,
+        pos: cell.player.proPlayer.position ?? "",
+      });
+    }
+  }
+  return picks;
 }

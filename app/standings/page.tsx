@@ -35,7 +35,7 @@ export default async function StandingsPage() {
         {standings.divisions.map((div) => (
           <section key={div.id}>
             <h2 className="plate mb-3">{div.name}</h2>
-            <div className="panel overflow-x-auto">
+            <div className="panel overflow-x-auto" tabIndex={0} role="region" aria-label={`${div.name} standings`}>
               <table className="w-full text-sm">
                 <thead>
                   <tr className="text-left text-parch border-b border-edge">

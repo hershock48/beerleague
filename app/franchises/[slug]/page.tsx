@@ -111,7 +111,7 @@ export default async function FranchisePage({
       <div className="grid gap-10 lg:grid-cols-2">
         <section className="min-w-0">
           <h2 className="plate mb-3">Season by Season</h2>
-          <div className="panel overflow-x-auto">
+          <div className="panel overflow-x-auto" tabIndex={0} role="region" aria-label="Season by season">
             <table className="w-full text-sm">
               <thead>
                 <tr className="text-left text-parch border-b border-edge">
@@ -154,7 +154,7 @@ export default async function FranchisePage({
         <div className="space-y-10 min-w-0">
           <section>
             <h2 className="plate mb-3">Head to Head, All Time</h2>
-            <div className="panel overflow-x-auto">
+            <div className="panel overflow-x-auto" tabIndex={0} role="region" aria-label="Head to head">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="text-left text-parch border-b border-edge">

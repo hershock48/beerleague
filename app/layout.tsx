@@ -22,6 +22,16 @@ export const metadata: Metadata = {
   },
   description:
     "The Beer League's own tap room: live scores, standings, two decades of league history, franchise records, and the record book.",
+  // Defined once here. No page defines its own openGraph: Next replaces the
+  // parent object wholesale instead of merging, image included (glaze.md).
+  openGraph: {
+    siteName: LEAGUE_NAME,
+    images: [{ url: "/og.png", width: 1200, height: 630 }],
+  },
+};
+
+export const viewport = {
+  themeColor: "#14100a",
 };
 
 const NAV = [
