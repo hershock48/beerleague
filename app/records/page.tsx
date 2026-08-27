@@ -54,15 +54,39 @@ export default async function RecordsPage() {
   return (
     <div>
       <h1 className="font-display text-3xl text-cream mb-2">The Record Book</h1>
-      <p className="text-parch mb-10 max-w-2xl">
+      <p className="text-parch mb-6 max-w-2xl">
         {derived.totals.games.toLocaleString("en-US")} games and{" "}
         {derived.totals.playerPerformances.toLocaleString("en-US")} player
         performances across {derived.totals.seasons} seasons, distilled to the
         nights worth arguing about.
       </p>
 
+      <nav aria-label="Record book sections" className="mb-10">
+        <ul className="flex flex-wrap gap-2 text-sm">
+          {[
+            ["#high-weeks", "Highest scores"],
+            ["#low-weeks", "Worst nights"],
+            ["#blowouts", "Blowouts"],
+            ["#nail-biters", "Nail-biters"],
+            ["#player-highs", "Player games"],
+            ["#bench", "Left on the bench"],
+            ["#season-pf", "Best seasons"],
+            ["#streaks", "Streaks"],
+          ].map(([href, label]) => (
+            <li key={href}>
+              <a
+                href={href}
+                className="block px-3 py-2 rounded border border-edge text-parch hover:text-amber hover:border-amber transition-colors"
+              >
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
       <div className="grid gap-10 lg:grid-cols-2">
-        <section>
+        <section id="high-weeks" className="scroll-mt-4">
           <h2 className="plate mb-3">Highest Team Scores, Ever</h2>
           <ol className="panel p-4 space-y-2 text-sm">
             {r.highWeeks.map((w, i) => (
@@ -84,7 +108,7 @@ export default async function RecordsPage() {
           </ol>
         </section>
 
-        <section>
+        <section id="low-weeks" className="scroll-mt-4">
           <h2 className="plate mb-3">Worst Nights at the Bar</h2>
           <ol className="panel p-4 space-y-2 text-sm">
             {r.lowWeeks.map((w, i) => (
@@ -106,7 +130,7 @@ export default async function RecordsPage() {
           </ol>
         </section>
 
-        <section>
+        <section id="blowouts" className="scroll-mt-4">
           <h2 className="plate mb-3">Biggest Blowouts</h2>
           <ol className="panel p-4 space-y-2 text-sm">
             {r.blowouts.map((g, i) => (
@@ -115,7 +139,7 @@ export default async function RecordsPage() {
           </ol>
         </section>
 
-        <section>
+        <section id="nail-biters" className="scroll-mt-4">
           <h2 className="plate mb-3">Nail-Biters</h2>
           <ol className="panel p-4 space-y-2 text-sm">
             {r.nailBiters.map((g, i) => (
@@ -124,7 +148,7 @@ export default async function RecordsPage() {
           </ol>
         </section>
 
-        <section>
+        <section id="player-highs" className="scroll-mt-4">
           <h2 className="plate mb-3">Best Player Games Ever Started</h2>
           <ol className="panel p-4 space-y-2 text-sm">
             {r.playerHighs.slice(0, 15).map((p, i) => (
@@ -146,7 +170,7 @@ export default async function RecordsPage() {
           </ol>
         </section>
 
-        <section>
+        <section id="bench" className="scroll-mt-4">
           <h2 className="plate mb-3">Left on the Bench</h2>
           <p className="text-xs text-parch mb-2">
             The biggest games ever scored by a player whose manager sat him.
@@ -171,7 +195,7 @@ export default async function RecordsPage() {
           </ol>
         </section>
 
-        <section>
+        <section id="season-pf" className="scroll-mt-4">
           <h2 className="plate mb-3">Best Seasons by Points</h2>
           <ol className="panel p-4 space-y-2 text-sm">
             {r.seasonPF.map((s, i) => (
@@ -192,7 +216,7 @@ export default async function RecordsPage() {
           </ol>
         </section>
 
-        <section>
+        <section id="streaks" className="scroll-mt-4">
           <h2 className="plate mb-3">Longest Streaks</h2>
           <ol className="panel p-4 space-y-2 text-sm">
             {r.streaks.map((s, i) => (

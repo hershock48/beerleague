@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getDerived, getSeasonGames, getArchivedBox } from "@/lib/archive";
-import { getLiveBoxRaw } from "@/lib/live";
+import { getLiveBoxRaw, getScoreboard } from "@/lib/live";
 import { normalizeBox, type BoxScore, type BoxPlayer } from "@/lib/box";
 import { CURRENT_SEASON } from "@/lib/league";
 
@@ -73,6 +73,21 @@ export default async function GamePage({
   const homeWon = (box.home.pts ?? 0) > (box.away.pts ?? 0);
   const live = year >= CURRENT_SEASON && !box.isFinal;
 
+  // The other games that week, so a box score is never a dead end. Archived
+  // years read the week files at build; the current season asks the live
+  // scoreboard (cached), since the archive is not in the serverless bundle.
+  let siblings: { id: string; away: string; home: string }[] = [];
+  if (year >= CURRENT_SEASON) {
+    const board = await getScoreboard(box.week);
+    siblings = (board?.games ?? [])
+      .filter((g) => String(g.id) !== id)
+      .map((g) => ({ id: String(g.id), away: g.away.name, home: g.home.name }));
+  } else {
+    siblings = (await getSeasonGames(year))
+      .filter((g) => g.week === box.week && g.id !== id)
+      .map((g) => ({ id: g.id, away: g.away.name, home: g.home.name }));
+  }
+
   return (
     <div>
       <p className="text-sm mb-4">
@@ -133,6 +148,24 @@ export default async function GamePage({
           </section>
         ))}
       </div>
+
+      {siblings.length > 0 && (
+        <nav aria-label={`Other week ${box.week} games`} className="mt-10">
+          <h2 className="plate mb-3">More from Week {box.week}</h2>
+          <ul className="flex flex-wrap gap-2 text-sm">
+            {siblings.map((g) => (
+              <li key={g.id}>
+                <Link
+                  href={`/seasons/${year}/games/${g.id}`}
+                  className="block px-3 py-2 rounded border border-edge text-parch hover:text-amber hover:border-amber transition-colors"
+                >
+                  {g.away} at {g.home}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
 
       {year < CURRENT_SEASON && (
         <p className="text-xs text-parch mt-6">

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Alfa_Slab_One, Bitter } from "next/font/google";
 import Link from "next/link";
+import NavLinks from "@/components/NavLinks";
 import { LEAGUE_NAME, FIRST_SEASON, FLEAFLICKER_URL } from "@/lib/league";
 import "./globals.css";
 
@@ -34,21 +35,18 @@ export const viewport = {
   themeColor: "#14100a",
 };
 
-const NAV = [
-  { href: "/", label: "Tap Room" },
-  { href: "/scores", label: "Scores" },
-  { href: "/standings", label: "Standings" },
-  { href: "/seasons", label: "Seasons" },
-  { href: "/franchises", label: "Franchises" },
-  { href: "/records", label: "Record Book" },
-] as const;
-
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`}>
       <body className="min-h-screen flex flex-col">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-amber focus:text-ground focus:px-4 focus:py-2 focus:rounded"
+        >
+          Skip to content
+        </a>
         <header className="border-b border-edge bg-surface/80">
           <div className="mx-auto max-w-6xl px-4">
             <div className="flex items-baseline justify-between gap-4 pt-5 pb-1">
@@ -63,24 +61,12 @@ export default function RootLayout({
                 in its own box clips its last item with no affordance
                 (glaze/standards.md, the devine nav). Two rows at 320 is fine. */}
             <nav aria-label="Main">
-              <ul className="flex flex-wrap gap-1 pb-0 text-sm">
-                {NAV.map((item) => (
-                  <li key={item.href}>
-                    {/* py grows the tap target past 24px; the look stays a quiet tab */}
-                    <Link
-                      href={item.href}
-                      className="block px-3 py-3 text-parch hover:text-amber border-b-2 border-transparent hover:border-amber transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              <NavLinks />
             </nav>
           </div>
         </header>
 
-        <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">{children}</main>
+        <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">{children}</main>
 
         <footer className="border-t border-edge mt-16">
           <div className="mx-auto max-w-6xl px-4 py-8 text-sm text-parch flex flex-wrap gap-x-8 gap-y-2 items-center justify-between">

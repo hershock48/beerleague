@@ -1,14 +1,10 @@
 "use client";
 // The news rail with the "whose team are you" filter. Items arrive fully
 // server-rendered props (already cross-referenced against every roster), so
-// filtering here is pure array work: no fetch, no spinner. The chosen
-// franchise persists in localStorage so the bar remembers your stool.
-// Storage access is wrapped: private windows and blocked site data must not
-// break the feed, they just forget the choice.
-import { useEffect, useState } from "react";
+// filtering here is pure array work: no fetch, no spinner. The choice lives
+// in lib/myTeam.ts and personalizes the whole site, not just this feed.
 import type { NewsItem } from "@/lib/news";
-
-const STORAGE_KEY = "beerleague.myTeam";
+import { useMyTeam, writeMyTeam } from "@/lib/myTeam";
 
 export default function NewsFeed({
   items,
@@ -17,22 +13,9 @@ export default function NewsFeed({
   items: NewsItem[];
   teams: { id: number; name: string }[];
 }) {
-  const [teamId, setTeamId] = useState<number | 0>(0);
-
-  useEffect(() => {
-    try {
-      const saved = Number(localStorage.getItem(STORAGE_KEY));
-      if (saved && teams.some((t) => t.id === saved)) setTeamId(saved);
-    } catch {}
-  }, [teams]);
-
-  const pick = (id: number) => {
-    setTeamId(id);
-    try {
-      if (id) localStorage.setItem(STORAGE_KEY, String(id));
-      else localStorage.removeItem(STORAGE_KEY);
-    } catch {}
-  };
+  const stored = useMyTeam();
+  const teamId = teams.some((t) => t.id === stored) ? stored : 0;
+  const pick = (id: number) => writeMyTeam(id);
 
   const shown =
     teamId === 0
@@ -41,23 +24,30 @@ export default function NewsFeed({
 
   return (
     <div>
-      <div className="flex flex-wrap items-center gap-3 mb-4">
-        <label htmlFor="team-pick" className="text-sm text-parch">
-          Pour the news for
-        </label>
-        <select
-          id="team-pick"
-          value={teamId}
-          onChange={(e) => pick(Number(e.target.value))}
-          className="bg-panel border border-edge rounded px-3 py-2 text-cream text-sm"
-        >
-          <option value={0}>The whole bar</option>
-          {teams.map((t) => (
-            <option key={t.id} value={t.id}>
-              {t.name}
-            </option>
-          ))}
-        </select>
+      <div className="mb-4">
+        <div className="flex flex-wrap items-center gap-3">
+          <label htmlFor="team-pick" className="text-sm text-parch">
+            Pour the news for
+          </label>
+          <select
+            id="team-pick"
+            value={teamId}
+            onChange={(e) => pick(Number(e.target.value))}
+            className="bg-panel border border-edge rounded px-3 py-2 text-cream text-sm"
+          >
+            <option value={0}>The whole bar</option>
+            {teams.map((t) => (
+              <option key={t.id} value={t.id}>
+                {t.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        {teamId !== 0 && (
+          <p className="text-xs text-parch mt-2">
+            Your matchup lights up on the board above, too.
+          </p>
+        )}
       </div>
 
       {shown.length === 0 ? (

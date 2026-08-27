@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Scoreboard, LiveGame, LiveScore } from "@/lib/live";
 import { CURRENT_SEASON } from "@/lib/league";
+import { useMyTeam } from "@/lib/myTeam";
 
 function Side({
   name,
@@ -37,7 +38,7 @@ function Side({
   );
 }
 
-function GameCard({ game }: { game: LiveGame }) {
+function GameCard({ game, mine }: { game: LiveGame; mine: boolean }) {
   const av = game.awayScore?.score?.value ?? 0;
   const hv = game.homeScore?.score?.value ?? 0;
   const inPlay =
@@ -48,7 +49,9 @@ function GameCard({ game }: { game: LiveGame }) {
   return (
     <Link
       href={`/seasons/${CURRENT_SEASON}/games/${game.id}`}
-      className="panel p-4 flex flex-col gap-2 hover:border-amber transition-colors"
+      className={`panel p-4 flex flex-col gap-2 transition-colors hover:border-amber ${
+        mine ? "border-amber/70 shadow-[0_0_18px_rgb(232_163_61/0.15)]" : ""
+      }`}
     >
       <Side
         name={game.away.name}
@@ -63,7 +66,15 @@ function GameCard({ game }: { game: LiveGame }) {
         started={started}
       />
       <p className="text-xs text-parch pt-1 border-t border-edge flex justify-between">
-        <span>{game.isDivisional ? "Division game" : "Cross-division"}</span>
+        <span>
+          {mine ? (
+            <span className="text-amber">Your matchup</span>
+          ) : game.isDivisional ? (
+            "Division game"
+          ) : (
+            "Cross-division"
+          )}
+        </span>
         <span className={inPlay ? "text-win" : undefined}>
           {game.isFinalScore
             ? "Final"
@@ -103,16 +114,23 @@ export default function LiveScoreboard({
     return () => clearInterval(t);
   }, [week]);
 
+  const myTeam = useMyTeam();
   const games = board.games ?? [];
   if (games.length === 0) {
     return <p className="text-parch">No matchups on the board yet.</p>;
   }
+  // Highlight rather than reorder: a card that jumps position after
+  // hydration reads as the page glitching.
   return (
     <div>
       {week !== null && <p className="plate mb-3">Week {week}</p>}
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {games.map((g) => (
-          <GameCard key={g.id} game={g} />
+          <GameCard
+            key={g.id}
+            game={g}
+            mine={myTeam !== 0 && (g.away.id === myTeam || g.home.id === myTeam)}
+          />
         ))}
       </div>
     </div>

@@ -56,6 +56,31 @@ body {
   color: var(--color-ground);
 }
 
+/* Keyboard focus must be visible on a near-black ground; the browser default
+   ring can vanish into it. Amber, offset so it never melts into a border. */
+:focus-visible {
+  outline: 2px solid var(--color-amber);
+  outline-offset: 2px;
+}
+
+/* Loading skeleton block. Pulse is opacity-only (cheap) and stops entirely
+   under reduced motion; the un-animated state is a complete, quiet panel. */
+.skeleton {
+  background: var(--color-panel);
+  border: 1px solid var(--color-edge);
+  border-radius: 0.5rem;
+  animation: skeleton-pulse 1.6s ease-in-out infinite;
+}
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}
+
 /* The amber glow under headline elements: one place, reused. */
 .glow {
   text-shadow: 0 0 24px rgb(232 163 61 / 0.35);
