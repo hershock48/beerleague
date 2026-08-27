@@ -235,6 +235,14 @@ export default async function SeasonPage({
       {rounds.length > 0 && (
         <section className="mt-12">
           <h2 className="plate mb-4">Draft Board</h2>
+          {/* Fleaflicker's early records are spotty: 2012 survives as one
+              round of ten picks. Present partial data as partial. */}
+          {draft.length < season.teamCount * 3 && (
+            <p className="text-sm text-parch mb-3">
+              Only part of this draft survives in Fleaflicker&apos;s records;
+              this is everything it still has.
+            </p>
+          )}
           {/* Native details: collapsed in the server HTML and opens without
               JavaScript, so there is no hydration layout shift. */}
           <div className="space-y-2">

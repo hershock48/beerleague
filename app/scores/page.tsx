@@ -17,7 +17,9 @@ export default async function ScoresPage({
   searchParams: Promise<{ week?: string }>;
 }) {
   const { week: weekParam } = await searchParams;
-  const requested = weekParam ? Number(weekParam) : undefined;
+  const parsed = Number(weekParam);
+  const requested =
+    Number.isInteger(parsed) && parsed >= 1 && parsed <= 18 ? parsed : undefined;
   const board = await getScoreboard(requested);
 
   if (!board) {

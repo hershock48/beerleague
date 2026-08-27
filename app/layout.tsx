@@ -29,6 +29,9 @@ export const metadata: Metadata = {
     siteName: LEAGUE_NAME,
     images: [{ url: "/og.png", width: 1200, height: 630 }],
   },
+  // Every page canonicalizes to its own path on the real domain, so the
+  // three *.vercel.app aliases never compete with it in search.
+  alternates: { canonical: "./" },
 };
 
 export const viewport = {

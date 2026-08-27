@@ -71,7 +71,12 @@ export default async function GamePage({
 
   const awayWon = (box.away.pts ?? 0) > (box.home.pts ?? 0);
   const homeWon = (box.home.pts ?? 0) > (box.away.pts ?? 0);
-  const live = year >= CURRENT_SEASON && !box.isFinal;
+  // "Live" needs points on the board, not just "not final": before kickoff
+  // every current-season game is non-final, and this page once said "live,
+  // refreshes each minute" about a game nobody had started.
+  const started = (box.away.pts ?? 0) + (box.home.pts ?? 0) > 0;
+  const live = year >= CURRENT_SEASON && !box.isFinal && started;
+  const pregame = year >= CURRENT_SEASON && !box.isFinal && !started;
 
   // The other games that week, so a box score is never a dead end. Archived
   // years read the week files at build; the current season asks the live
@@ -103,6 +108,7 @@ export default async function GamePage({
         <p className="plate mb-2">
           Week {box.week} · {year}
           {live && <span className="text-win"> · live, refreshes each minute</span>}
+          {pregame && <span className="text-parch"> · not kicked off yet</span>}
         </p>
         <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1">
           <p className={`font-display text-2xl ${awayWon ? "text-amber glow" : "text-cream"}`}>
