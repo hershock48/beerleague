@@ -1,69 +1,175 @@
-import Image from "next/image";
+import Link from "next/link";
+import LiveScoreboard from "@/components/LiveScoreboard";
+import NewsFeed from "@/components/NewsFeed";
+import { getScoreboard, getStandings, getTransactions } from "@/lib/live";
+import { getNews, getTrending } from "@/lib/news";
+import { getDerived } from "@/lib/archive";
+import { CURRENT_SEASON } from "@/lib/league";
 
-export default function Home() {
+// The tap room shows live scores and this-hour news; it renders per request
+// (glaze.md: route caching and time do not mix). The fetch caches in lib/
+// keep the upstream calls throttled regardless of traffic.
+export const dynamic = "force-dynamic";
+
+function timeAgo(epochMilli: string | undefined): string | null {
+  if (!epochMilli) return null;
+  const mins = Math.floor((Date.now() - Number(epochMilli)) / 60_000);
+  if (mins < 1) return "just now";
+  if (mins < 60) return `${mins}m ago`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 48) return `${hours}h ago`;
+  return `${Math.floor(hours / 24)}d ago`;
+}
+
+const TX_LABELS: Record<string, string> = {
+  TRANSACTION_ADD: "added",
+  TRANSACTION_DROP: "dropped",
+  TRANSACTION_CLAIM: "claimed",
+  TRANSACTION_TRADE: "traded",
+};
+
+export default async function Home() {
+  const [board, standings, transactions, news, trending, derived] =
+    await Promise.all([
+      getScoreboard(),
+      getStandings(),
+      getTransactions(),
+      getNews(),
+      getTrending(),
+      getDerived(),
+    ]);
+
+  const week = board?.schedulePeriod?.value ?? null;
+  const teams =
+    standings?.divisions?.flatMap((d) =>
+      d.teams.map((t) => ({ id: t.id, name: t.name })),
+    ) ?? [];
+  const lastChamp = derived.seasons.find((s) => s.champion)?.champion ?? null;
+  const lastChampYear = derived.seasons.find((s) => s.champion)?.year ?? null;
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="space-y-12">
+      <section>
+        <h1 className="font-display text-3xl sm:text-4xl text-cream mb-1">
+          The Tap Room
+        </h1>
+        <p className="text-parch mb-6">
+          Season {CURRENT_SEASON}.{" "}
+          {lastChamp && lastChampYear && (
+            <>
+              Defending champion: <span className="text-amber">{lastChamp.name}</span>{" "}
+              ({lastChampYear}).
+            </>
+          )}
+        </p>
+        {board ? (
+          <LiveScoreboard initial={board} week={week} />
+        ) : (
+          <p className="text-parch">
+            Fleaflicker is not answering right now. The board will refill when
+            it does.
           </p>
+        )}
+      </section>
+
+      <div className="grid gap-12 lg:grid-cols-[1fr_20rem]">
+        <section>
+          <h2 className="plate mb-4">Around the League</h2>
+          {news.length > 0 ? (
+            <NewsFeed items={news} teams={teams} />
+          ) : (
+            <p className="text-parch">The news wire is quiet.</p>
+          )}
+        </section>
+
+        <div className="space-y-10">
+          <section>
+            <h2 className="plate mb-3">Standings</h2>
+            {standings?.divisions ? (
+              <div className="panel divide-y divide-edge">
+                {standings.divisions.map((div) => (
+                  <div key={div.id} className="p-4">
+                    <h3 className="text-sm text-cream font-semibold mb-2">
+                      {div.name}
+                    </h3>
+                    <ol className="space-y-1 text-sm">
+                      {div.teams.map((t) => (
+                        <li key={t.id} className="flex justify-between gap-2">
+                          <span className="text-parch">{t.name}</span>
+                          <span className="text-cream">
+                            {t.recordOverall.formatted}
+                          </span>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-parch text-sm">Standings unavailable.</p>
+            )}
+            <Link
+              href="/standings"
+              className="inline-block mt-2 text-sm text-amber underline underline-offset-4 hover:no-underline"
+            >
+              Full standings
+            </Link>
+          </section>
+
+          {trending.length > 0 && (
+            <section>
+              <h2 className="plate mb-3">Waiver Wire Buzz</h2>
+              <p className="text-xs text-parch mb-2">
+                Most-added players across all fantasy leagues, last 24 hours.
+              </p>
+              <ol className="panel p-4 space-y-2 text-sm">
+                {trending.map((p) => (
+                  <li key={p.name} className="flex justify-between gap-2">
+                    <span className="text-cream">
+                      {p.name}{" "}
+                      <span className="text-parch">
+                        {p.position} · {p.nflTeam}
+                      </span>
+                    </span>
+                    <span className="text-parch">
+                      +{p.adds.toLocaleString("en-US")}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
+
+          {transactions.length > 0 && (
+            <section>
+              <h2 className="plate mb-3">Latest Moves</h2>
+              <ul className="panel p-4 space-y-3 text-sm">
+                {transactions.slice(0, 8).map((tx, i) => {
+                  const t = tx.transaction;
+                  const player = t?.player?.proPlayer;
+                  if (!t?.team?.name || !player) return null;
+                  return (
+                    <li key={i}>
+                      <span className="text-cream">{t.team.name}</span>{" "}
+                      <span className="text-parch">
+                        {TX_LABELS[t.type ?? ""] ?? "moved"}
+                      </span>{" "}
+                      <span className="text-cream">{player.nameFull}</span>
+                      <span className="text-parch">
+                        {" "}
+                        · {player.position} {player.proTeamAbbreviation}
+                        {timeAgo(tx.timeEpochMilli) && (
+                          <> · {timeAgo(tx.timeEpochMilli)}</>
+                        )}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          )}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </div>
     </div>
   );
 }

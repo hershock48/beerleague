@@ -1,26 +1,78 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+  The Beer League: barroom at night.
+  Aged-wood grounds, amber beer-glow accents, foam-cream text, brass hairlines.
+  Every token below is validated against BOTH grounds it can land on
+  (--ground and --surface). Do not add a color without checking both.
+
+  Contrast (WCAG, computed 2026-08-27 against ground / surface / panel):
+    cream  15.49 / 14.17 / 13.05
+    parch   9.86 /  9.02 /  8.30
+    amber   8.79 /  8.04 /  7.40
+    win    10.24 /  9.37 /  8.63
+    loss    7.33 /  6.70 /  6.17
+    brass   4.23 /  3.87 /  3.56  <- FAILS 4.5 everywhere. Borders and
+           decorative rules only. Never set text in brass.
+*/
+
+@theme {
+  --color-ground: #14100a;
+  --color-surface: #211910;
+  --color-panel: #2a2015;
+  --color-edge: #3d2f1e;
+  --color-brass: #8a744d;
+  --color-cream: #f2e7d5;
+  --color-parch: #c9b99f;
+  --color-amber: #e8a33d;
+  --color-amber-deep: #b87a1e;
+  --color-win: #9fcb84;
+  --color-loss: #e58877;
+
+  --font-display: var(--font-display), "Georgia", serif;
+  --font-body: var(--font-body), "Georgia", serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--color-ground);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ground);
+  color: var(--color-cream);
+  font-family: var(--font-body);
+  /* A 38-char email once overflowed a document through a bare text node
+     no rect could see; break-word at the body is the account-wide fix. */
+  overflow-wrap: break-word;
+}
+
+/* Scores, records and stats align as columns everywhere, no exceptions. */
+body {
+  font-variant-numeric: tabular-nums;
+}
+
+::selection {
+  background: var(--color-amber);
+  color: var(--color-ground);
+}
+
+/* The amber glow under headline elements: one place, reused. */
+.glow {
+  text-shadow: 0 0 24px rgb(232 163 61 / 0.35);
+}
+
+/* Panel: the wood-and-brass card every module sits on. */
+.panel {
+  background: linear-gradient(160deg, var(--color-panel), var(--color-surface) 70%);
+  border: 1px solid var(--color-edge);
+  border-radius: 0.5rem;
+}
+
+/* Small caps label used for section headers, like etched brass plates. */
+.plate {
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-amber);
+  font-weight: 600;
 }
