@@ -23,7 +23,7 @@ export default async function SeasonsPage() {
           <li key={s.year}>
             <Link
               href={`/seasons/${s.year}`}
-              className="panel flex flex-wrap items-baseline gap-x-6 gap-y-1 p-4 hover:border-volt transition-colors"
+              className="panel flex flex-wrap items-baseline gap-x-6 gap-y-1 p-4 lift hover:border-volt"
             >
               <span className="font-display text-xl text-volt w-16">
                 {s.year}

@@ -23,7 +23,7 @@ export default function YourStool({ teams }: { teams: StoolTeam[] }) {
   const mine = teams.find((t) => t.id === myTeam) ?? null;
 
   return (
-    <div className="panel px-4 py-3 mb-6 min-h-14 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+    <div className="panel px-4 py-3 mb-6 min-h-14 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm rise">
       {mine ? (
         <>
           <span className="marker text-volt">Your stool:</span>

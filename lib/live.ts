@@ -22,6 +22,9 @@ export interface LiveScore {
   score?: { value?: number; formatted?: string };
   yetToPlay?: number;
   inPlay?: number;
+  /** Fleaflicker's own projection: pregame it is the full projected total,
+   *  in-game it tracks score plus remaining projections. */
+  projected?: { value?: number; formatted?: string };
 }
 
 export interface LiveGame {

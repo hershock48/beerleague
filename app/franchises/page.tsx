@@ -29,7 +29,7 @@ export default async function FranchisesPage() {
   const Card = ({ f }: { f: (typeof all)[number] }) => (
     <Link
       href={`/franchises/${f.slug}`}
-      className="panel block p-4 hover:border-volt transition-colors"
+      className="panel block p-4 lift hover:border-volt"
     >
       <p className="text-ink font-semibold">
         {f.currentName}

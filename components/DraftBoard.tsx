@@ -88,7 +88,7 @@ export default function DraftBoard({ initial }: { initial: LiveDraftBoard }) {
           {recent.map((p) => (
             <li
               key={p.overall}
-              className={`panel p-3 ${
+              className={`panel p-3 rise ${
                 myTeam !== 0 && p.teamId === myTeam ? "border-volt/70" : ""
               }`}
             >

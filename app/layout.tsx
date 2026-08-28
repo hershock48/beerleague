@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Alfa_Slab_One, Bitter, Permanent_Marker } from "next/font/google";
 import Link from "next/link";
 import NavLinks from "@/components/NavLinks";
+import StoolChip from "@/components/StoolChip";
+import { getDerived } from "@/lib/archive";
 import { LEAGUE_NAME, FIRST_SEASON, FLEAFLICKER_URL } from "@/lib/league";
 import "./globals.css";
 
@@ -45,9 +47,16 @@ export const viewport = {
   themeColor: "#faf9f5",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  // The 12 active franchises, for the header's stool chip. derived.json is
+  // traced into the serverless bundle, so this read works on dynamic pages
+  // too; SSG pages bake it at build.
+  const derived = await getDerived();
+  const stoolTeams = Object.values(derived.franchises)
+    .filter((f) => f.active)
+    .map((f) => ({ id: f.id, name: f.currentName, slug: f.slug }));
   return (
     <html lang="en" className={`${display.variable} ${body.variable} ${marker.variable}`}>
       <body className="min-h-screen flex flex-col">
@@ -64,8 +73,11 @@ export default function RootLayout({
               <Link href="/" className="font-display text-pink glow-pink text-2xl sm:text-3xl leading-none">
                 {LEAGUE_NAME}
               </Link>
-              <span className="plate hidden sm:block text-steel!">
-                est. {FIRST_SEASON}
+              <span className="flex items-center gap-3">
+                <StoolChip teams={stoolTeams} />
+                <span className="plate hidden sm:block text-steel!">
+                  est. {FIRST_SEASON}
+                </span>
               </span>
             </div>
             {/* Wrapping beats a hidden horizontal scroller: a nav that scrolls

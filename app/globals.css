@@ -75,7 +75,10 @@ main {
   letter-spacing: 0.01em;
 }
 
-/* Chalk squiggle under a page title, drawn once, reused everywhere. */
+/* Chalk squiggle under a page title. It wipes on like a pen stroke: the
+   BASE state is fully drawn (the un-animated state is the finished state,
+   glaze.md), and the keyframes start it from zero width. Reduced motion
+   kills the animation and the base state is already complete. */
 .scrawl {
   position: relative;
   display: inline-block;
@@ -84,6 +87,91 @@ main {
   background-repeat: no-repeat;
   background-position: left bottom;
   background-size: min(100%, 220px) 10px;
+  animation: scrawl-draw 0.55s cubic-bezier(0.3, 0, 0.4, 1) 0.15s backwards;
+}
+@keyframes scrawl-draw {
+  from {
+    background-size: 0 10px;
+  }
+}
+
+/* Entrance: a small rise, opacity and transform only so nothing shifts
+   layout. Base state is visible; keyframes start from hidden with
+   'backwards' fill covering the delay. Stagger with .rise-1..8. */
+.rise {
+  animation: rise-in 0.5s cubic-bezier(0.2, 0, 0.3, 1) backwards;
+}
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(9px);
+  }
+}
+.rise-1 { animation-delay: 0.05s; }
+.rise-2 { animation-delay: 0.14s; }
+.rise-3 { animation-delay: 0.23s; }
+.rise-4 { animation-delay: 0.32s; }
+.rise-5 { animation-delay: 0.41s; }
+.rise-6 { animation-delay: 0.5s; }
+.rise-7 { animation-delay: 0.59s; }
+.rise-8 { animation-delay: 0.68s; }
+
+/* Interactive cards lift a touch under the pointer. */
+.lift {
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgb(32 36 43 / 0.1);
+}
+
+/* The live dot: a slow breath next to in-play scores. */
+.pulse-dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--color-win);
+  animation: pulse-breathe 1.8s ease-in-out infinite;
+}
+@keyframes pulse-breathe {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+/* The play diagram draws itself: every stroke uses pathLength=1 so one
+   dasharray fits all. Base state fully drawn; keyframes pull it back. */
+.draw-stroke {
+  stroke-dasharray: 1;
+  animation: draw-in 0.7s cubic-bezier(0.3, 0, 0.35, 1) backwards;
+}
+@keyframes draw-in {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+.pop-in {
+  animation: pop-fade 0.4s ease-out backwards;
+}
+@keyframes pop-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrawl,
+  .rise,
+  .draw-stroke,
+  .pop-in,
+  .pulse-dot {
+    animation: none;
+  }
+  .lift,
+  .lift:hover {
+    transform: none;
+    transition: none;
+  }
 }
 
 /* Taped-up sheets: record cards and player game lists pinned to the wall
