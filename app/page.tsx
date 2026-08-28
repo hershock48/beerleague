@@ -258,12 +258,40 @@ export default async function Home() {
                 </li>
               )}
             </ul>
-            <Link
-              href="/records"
-              className="inline-block mt-2 text-sm text-volt underline underline-offset-4 hover:no-underline"
-            >
-              The whole record book
-            </Link>
+            <p className="mt-2 text-sm flex flex-wrap gap-x-4">
+              <Link
+                href="/records"
+                className="text-volt underline underline-offset-4 hover:no-underline"
+              >
+                The whole record book
+              </Link>
+              <Link
+                href="/shame"
+                className="text-loss underline underline-offset-4 hover:no-underline"
+              >
+                The Wall of Shame
+              </Link>
+            </p>
+          </section>
+
+          <section>
+            <h2 className="plate mb-3">Last Call</h2>
+            <div className="panel p-4 text-sm">
+              <p className="text-steel mb-2">
+                The weekly column returns when week 1 goes final. Meanwhile,
+                the back issues run deep:
+              </p>
+              {/* Week 16 is written literally: this page renders at request
+                  time on Vercel where the archive is not on disk, so the
+                  final week cannot be derived here. 2025 ended in week 16;
+                  update alongside CURRENT_SEASON in the yearly ritual. */}
+              <Link
+                href={`/recaps/${lastChampSeason?.year ?? 2025}/16`}
+                className="text-volt underline underline-offset-4 hover:no-underline"
+              >
+                Read the {lastChampSeason?.year} championship recap
+              </Link>
+            </div>
           </section>
 
           <Suspense fallback={<div aria-busy="true" className="skeleton h-56" />}>

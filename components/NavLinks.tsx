@@ -9,11 +9,13 @@ const NAV = [
   { href: "/", label: "Tap Room" },
   { href: "/scores", label: "Scores" },
   { href: "/standings", label: "Standings" },
+  { href: "/rankings", label: "Rankings" },
+  { href: "/recaps", label: "Recaps" },
   { href: "/seasons", label: "Seasons" },
   { href: "/franchises", label: "Franchises" },
   { href: "/players", label: "Players" },
-  { href: "/records", label: "Record Book" },
-  { href: "/ledger", label: "The Ledger" },
+  { href: "/records", label: "Records" },
+  { href: "/ledger", label: "Ledger" },
 ] as const;
 
 export default function NavLinks() {

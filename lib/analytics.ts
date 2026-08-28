@@ -1,6 +1,6 @@
-// Build-time reader for data/analytics.json (tools/derive-analytics.mjs).
-// The Ledger page is SSG; nothing calls this at request time on Vercel,
-// so the file is deliberately not traced into the serverless bundle.
+// Reader for data/analytics.json (tools/derive-analytics.mjs). Used at
+// build time by the Ledger and at REQUEST time by /rankings (the preseason
+// poll), so the file IS traced into the serverless bundle (next.config.ts).
 import "server-only";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
@@ -60,6 +60,15 @@ export interface GridRow {
   cells: ({ w: number; l: number; t: number } | null)[];
 }
 
+export interface PreseasonPollRow {
+  id: number;
+  name: string;
+  slug: string;
+  rating: number;
+  avg: number;
+  record: string;
+}
+
 export interface Analytics {
   seasonScoring: SeasonScoring[];
   posEras: PosEra[];
@@ -69,6 +78,7 @@ export interface Analytics {
   clutch: ClutchRow[];
   benchWaste: BenchRow[];
   grid: GridRow[];
+  preseason?: { year: number; poll: PreseasonPollRow[] };
 }
 
 let cache: Analytics | null = null;

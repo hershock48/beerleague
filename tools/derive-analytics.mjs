@@ -169,6 +169,51 @@ async function main() {
     }),
   }));
 
+  // Last completed season's Oberon Mt. power ratings (6x avg + 2x(high+low)
+  // + 2x(winPct x 200)), the preseason baseline for /rankings before any
+  // current-season games exist. Needs each team's high and low week, which
+  // only the week files know.
+  const lastYear = Math.max(...seasons.filter((y) => {
+    const s = derived.seasons.find((x) => x.year === y);
+    return s && !s.isCurrent;
+  }));
+  const oberon = new Map(); // teamId -> {pts:[], w, l}
+  {
+    const dir = path.join(DATA, "seasons", String(lastYear));
+    for (const wf of (await readdir(dir)).filter((f) => f.startsWith("week-"))) {
+      const board = await readJson(`seasons/${lastYear}/${wf}`);
+      for (const g of board.games ?? []) {
+        const as = g.awayScore?.score?.value;
+        const hs = g.homeScore?.score?.value;
+        if (as === undefined || hs === undefined || (as === 0 && hs === 0)) continue;
+        for (const [side, my, their] of [[g.away, as, hs], [g.home, hs, as]]) {
+          const o = oberon.get(side.id) ?? { pts: [], w: 0, l: 0 };
+          o.pts.push(my);
+          if (my > their) o.w++; else if (my < their) o.l++;
+          oberon.set(side.id, o);
+        }
+      }
+    }
+  }
+  const preseasonPoll = active
+    .map((f) => {
+      const o = oberon.get(f.id);
+      if (!o || o.pts.length === 0) return null;
+      const avg = o.pts.reduce((a, b) => a + b, 0) / o.pts.length;
+      const rating =
+        avg * 6 +
+        (Math.max(...o.pts) + Math.min(...o.pts)) * 2 +
+        (o.w / (o.w + o.l)) * 200 * 2;
+      return {
+        id: f.id, name: f.currentName, slug: f.slug,
+        rating: Math.round(rating * 10) / 10,
+        avg: Math.round(avg * 100) / 100,
+        record: `${o.w}-${o.l}`,
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) => b.rating - a.rating);
+
   const analytics = {
     seasonScoring,
     posEras: posErasByYear,
@@ -179,6 +224,7 @@ async function main() {
     benchWaste: benchRows,
     grid,
     nameOf,
+    preseason: { year: lastYear, poll: preseasonPoll },
   };
   await writeFile(path.join(DATA, "analytics.json"), JSON.stringify(analytics));
   console.log(

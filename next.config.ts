@@ -12,9 +12,9 @@ const nextConfig: NextConfig = {
   // it at request time. If a page ever starts reading data/seasons/** or
   // data/players.json at runtime, it must be added here.
   outputFileTracingIncludes: {
-    "/": ["data/derived.json", "data/player-slugs.json"],
-    "/*": ["data/derived.json", "data/player-slugs.json"],
-    "/**": ["data/derived.json", "data/player-slugs.json"],
+    "/": ["data/derived.json", "data/player-slugs.json", "data/analytics.json"],
+    "/*": ["data/derived.json", "data/player-slugs.json", "data/analytics.json"],
+    "/**": ["data/derived.json", "data/player-slugs.json", "data/analytics.json"],
   },
 };
 
