@@ -118,7 +118,7 @@ export function LineChart({
             x={W - PAD.right + 8}
             y={sy(s.points[s.points.length - 1].y) + 4}
             fontSize="12"
-            fill="var(--color-ice)"
+            fill="var(--color-ink)"
           >
             {s.name}
           </text>
@@ -158,7 +158,7 @@ export function DivergingBars({
         const pos = r.value >= 0;
         return (
           <g key={r.name}>
-            <text x={4} y={y + 13} fontSize="12" fill="var(--color-ice)">
+            <text x={4} y={y + 13} fontSize="12" fill="var(--color-ink)">
               {r.name}
             </text>
             <rect
@@ -215,7 +215,7 @@ export function Bars({
         const w = (r.value / max) * span;
         return (
           <g key={r.name}>
-            <text x={labelW - 8} y={y + 13} textAnchor="end" fontSize="12" fill="var(--color-ice)">
+            <text x={labelW - 8} y={y + 13} textAnchor="end" fontSize="12" fill="var(--color-ink)">
               {r.name}
             </text>
             <rect x={labelW} y={y} width={Math.max(w, 2)} height={18} rx="3" fill="var(--color-volt)">

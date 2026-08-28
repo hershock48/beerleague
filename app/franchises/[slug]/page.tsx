@@ -59,7 +59,7 @@ export default async function FranchisePage({
           ← All franchises
         </Link>
       </p>
-      <h1 className="font-display text-3xl text-ice mb-1">
+      <h1 className="font-display text-3xl text-ink mb-1">
         {f.currentName}
         {f.championships.length > 0 && (
           <span className="text-volt glow"> {"🏆".repeat(f.championships.length)}</span>
@@ -74,7 +74,7 @@ export default async function FranchisePage({
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-10">
         <div className="panel p-4">
           <p className="plate">All-time record</p>
-          <p className="text-2xl text-ice mt-1">
+          <p className="text-2xl text-ink mt-1">
             {f.career.w}-{f.career.l}
             {f.career.t > 0 && `-${f.career.t}`}
           </p>
@@ -82,7 +82,7 @@ export default async function FranchisePage({
         </div>
         <div className="panel p-4">
           <p className="plate">Championships</p>
-          <p className="text-2xl text-ice mt-1">{f.championships.length}</p>
+          <p className="text-2xl text-ink mt-1">{f.championships.length}</p>
           <p className={`text-sm marker ${f.championships.length > 0 ? "text-volt" : "text-steel"}`}>
             {f.championships.length > 0
               ? f.championships.map((y) => `'${String(y).slice(2)}`).join("  ")
@@ -91,14 +91,14 @@ export default async function FranchisePage({
         </div>
         <div className="panel p-4">
           <p className="plate">Playoff runs</p>
-          <p className="text-2xl text-ice mt-1">{f.playoffApps}</p>
+          <p className="text-2xl text-ink mt-1">{f.playoffApps}</p>
           <p className="text-sm text-steel">
             {f.runnerUps.length > 0 && <>runner-up {f.runnerUps.join(", ")}</>}
           </p>
         </div>
         <div className="panel p-4">
           <p className="plate">Points all time</p>
-          <p className="text-2xl text-ice mt-1">
+          <p className="text-2xl text-ink mt-1">
             {Math.round(f.career.pf).toLocaleString("en-US")}
           </p>
           <p className="text-sm text-steel">
@@ -132,14 +132,14 @@ export default async function FranchisePage({
                         {s.year}
                       </Link>
                     </td>
-                    <td className="px-4 py-2 text-ice">{s.name}</td>
-                    <td className="px-4 py-2 text-ice">{s.record}</td>
-                    <td className="px-4 py-2 text-right text-ice">{s.pf}</td>
+                    <td className="px-4 py-2 text-ink">{s.name}</td>
+                    <td className="px-4 py-2 text-ink">{s.record}</td>
+                    <td className="px-4 py-2 text-right text-ink">{s.pf}</td>
                     <td className="px-4 py-2">
                       {s.finish === "champion" ? (
                         <span className="text-volt">Champion</span>
                       ) : s.finish === "runner-up" ? (
-                        <span className="text-ice">Runner-up</span>
+                        <span className="text-ink">Runner-up</span>
                       ) : s.finish === "playoffs" ? (
                         <span className="text-steel">Playoffs</span>
                       ) : (
@@ -172,7 +172,7 @@ export default async function FranchisePage({
                       <td className="px-4 py-2">
                         <Link
                           href={`/franchises/${r.other.slug}`}
-                          className="text-ice hover:text-volt"
+                          className="text-ink hover:text-volt"
                         >
                           {r.other.currentName}
                         </Link>
@@ -181,7 +181,7 @@ export default async function FranchisePage({
                         {r.w}-{r.l}
                         {r.t > 0 && `-${r.t}`}
                       </td>
-                      <td className="px-4 py-2 text-right text-ice">{Math.round(r.pf)}</td>
+                      <td className="px-4 py-2 text-right text-ink">{Math.round(r.pf)}</td>
                       <td className="px-4 py-2 text-right text-steel">{Math.round(r.pa)}</td>
                     </tr>
                   ))}
@@ -202,7 +202,7 @@ export default async function FranchisePage({
                       </Link>{" "}
                       week {w.week} vs {w.vs}
                     </span>
-                    <span className="text-ice">{w.pts.toFixed(2)}</span>
+                    <span className="text-ink">{w.pts.toFixed(2)}</span>
                   </li>
                 ))}
               </ul>

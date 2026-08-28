@@ -4,7 +4,7 @@ export default function NotFound() {
   return (
     <div className="py-16 text-center">
       <p className="marker text-6xl text-volt glow mb-4 -rotate-2">404</p>
-      <h1 className="text-xl text-ice mb-2">That one&apos;s not on tap.</h1>
+      <h1 className="text-xl text-ink mb-2">That one&apos;s not on tap.</h1>
       <p className="text-steel mb-8">
         The page you asked for is not behind this bar.
       </p>

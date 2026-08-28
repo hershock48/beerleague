@@ -22,7 +22,7 @@ export default async function RecapsPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-ice mb-2 scrawl">The Recaps</h1>
+      <h1 className="font-display text-3xl text-ink mb-2 scrawl">The Recaps</h1>
       <p className="text-steel mb-4 max-w-2xl">
         The weekly column, written by the bar itself: hardware, box scores,
         and standings to keep everyone humble. Every week back to{" "}

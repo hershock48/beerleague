@@ -38,7 +38,7 @@ function DataTable({
             {rows.map((r, i) => (
               <tr key={i} className="border-b border-edge last:border-0">
                 {r.map((c, j) => (
-                  <td key={j} className={`px-3 py-1.5 ${j === 0 ? "text-ice" : "text-steel"}`}>
+                  <td key={j} className={`px-3 py-1.5 ${j === 0 ? "text-ink" : "text-steel"}`}>
                     {c}
                   </td>
                 ))}
@@ -63,7 +63,7 @@ export default async function LedgerPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-ice mb-2 scrawl">The Ledger</h1>
+      <h1 className="font-display text-3xl text-ink mb-2 scrawl">The Ledger</h1>
       <p className="text-steel mb-10 max-w-2xl">
         The bar math: {a.seasonScoring.length} seasons run through the numbers,
         for settling arguments and starting better ones.
@@ -123,7 +123,7 @@ export default async function LedgerPage() {
                 {a.grid.map((row) => (
                   <tr key={row.id}>
                     <th className="px-2 py-1.5 text-left font-normal whitespace-nowrap">
-                      <Link href={`/franchises/${row.slug}`} className="text-ice hover:text-volt">
+                      <Link href={`/franchises/${row.slug}`} className="text-ink hover:text-volt">
                         {row.name}
                       </Link>
                     </th>
@@ -143,7 +143,7 @@ export default async function LedgerPage() {
                       return (
                         <td
                           key={j}
-                          className="text-center text-ice px-1 py-1.5 whitespace-nowrap"
+                          className="text-center text-ink px-1 py-1.5 whitespace-nowrap"
                           style={bg ? { backgroundColor: bg } : undefined}
                           title={`${row.name} vs ${a.grid[j].name}: ${cell.w}-${cell.l}${cell.t ? `-${cell.t}` : ""}`}
                         >
@@ -162,9 +162,9 @@ export default async function LedgerPage() {
           <h2 className="plate mb-1">The Luck Ledger</h2>
           <p className="text-sm text-steel mb-4 max-w-2xl">
             Actual wins against Pythagorean expected wins from points scored and
-            allowed, all time. <span className="text-ice">{luckiest.name}</span>{" "}
+            allowed, all time. <span className="text-ink">{luckiest.name}</span>{" "}
             has banked {luckiest.delta} more wins than its points earned;{" "}
-            <span className="text-ice">{unluckiest.name}</span> is owed{" "}
+            <span className="text-ink">{unluckiest.name}</span> is owed{" "}
             {Math.abs(unluckiest.delta)}. The schedule keeps receipts.
           </p>
           <div className="panel p-4">
@@ -216,7 +216,7 @@ export default async function LedgerPage() {
           <h2 className="plate mb-1">Cold Blood</h2>
           <p className="text-sm text-steel mb-4 max-w-2xl">
             Records in games decided by fewer than five points.{" "}
-            <span className="text-ice">{clutchKing.name}</span> wins the close
+            <span className="text-ink">{clutchKing.name}</span> wins the close
             ones at {clutchKing.pct}%.
           </p>
           <div className="panel overflow-x-auto" tabIndex={0} role="region" aria-label="Close-game records">
@@ -232,7 +232,7 @@ export default async function LedgerPage() {
                 {a.clutch.map((c) => (
                   <tr key={c.id} className="border-b border-edge last:border-0">
                     <td className="px-4 py-2">
-                      <Link href={`/franchises/${c.slug}`} className="text-ice hover:text-volt">
+                      <Link href={`/franchises/${c.slug}`} className="text-ink hover:text-volt">
                         {c.name}
                       </Link>
                     </td>
@@ -251,7 +251,7 @@ export default async function LedgerPage() {
           <h2 className="plate mb-1">Points Left on the Bench</h2>
           <p className="text-sm text-steel mb-4 max-w-2xl">
             Every point ever scored by a player while his manager sat him.{" "}
-            <span className="text-ice">{benchKing.name}</span> has wasted{" "}
+            <span className="text-ink">{benchKing.name}</span> has wasted{" "}
             {benchKing.pts.toLocaleString("en-US")} points this way. Pour one
             out.
           </p>

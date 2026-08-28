@@ -14,7 +14,7 @@ export default async function SeasonsPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-ice mb-2 scrawl">The Back Room</h1>
+      <h1 className="font-display text-3xl text-ink mb-2 scrawl">The Back Room</h1>
       <p className="text-steel mb-8 max-w-2xl">
         {done.length} completed seasons on the wall. {CANDY_ERA_NOTE}
       </p>
@@ -32,7 +32,7 @@ export default async function SeasonsPage() {
                 <span className="text-steel">In progress</span>
               ) : s.champion ? (
                 <>
-                  <span className="text-ice">
+                  <span className="text-ink">
                     🏆 {s.champion.name}
                     {s.champion.owner && (
                       <span className="text-steel"> · {s.champion.owner}</span>

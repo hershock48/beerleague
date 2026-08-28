@@ -86,7 +86,7 @@ export default async function RankingsPage() {
     const poll = analytics.preseason?.poll ?? [];
     return (
       <div>
-        <h1 className="font-display text-3xl text-ice mb-2 scrawl">
+        <h1 className="font-display text-3xl text-ink mb-2 scrawl">
           The Power Poll
         </h1>
         <p className="text-steel mb-8 max-w-2xl">
@@ -112,7 +112,7 @@ export default async function RankingsPage() {
                 <tr key={p.id} className="border-b border-edge last:border-0">
                   <td className="px-4 py-2 text-steel">{i + 1}</td>
                   <td className="px-4 py-2">
-                    <Link href={`/franchises/${p.slug}`} className="text-ice hover:text-volt">
+                    <Link href={`/franchises/${p.slug}`} className="text-ink hover:text-volt">
                       {p.name}
                     </Link>
                   </td>
@@ -188,7 +188,7 @@ export default async function RankingsPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-ice mb-2 scrawl">
+      <h1 className="font-display text-3xl text-ink mb-2 scrawl">
         The Power Poll
       </h1>
       <p className="text-steel mb-8 max-w-2xl">
@@ -216,18 +216,18 @@ export default async function RankingsPage() {
                 <td className="px-4 py-2">
                   <Link
                     href={`/franchises/${slugOf.get(t.id) ?? ""}`}
-                    className="text-ice hover:text-volt"
+                    className="text-ink hover:text-volt"
                   >
                     {t.name}
                   </Link>
                 </td>
                 <td className="px-4 py-2 text-right text-volt">{t.rating}</td>
-                <td className="px-4 py-2 text-right text-ice">{t.w}-{t.l}</td>
+                <td className="px-4 py-2 text-right text-ink">{t.w}-{t.l}</td>
                 <td className="px-4 py-2 text-right text-steel">{t.avg.toFixed(1)}</td>
                 <td className="px-4 py-2 text-right text-steel">{t.projWins}</td>
                 <td
                   className={`px-4 py-2 text-right ${
-                    t.odds >= 60 ? "text-win" : t.odds < 25 ? "text-loss" : "text-ice"
+                    t.odds >= 60 ? "text-win" : t.odds < 25 ? "text-loss" : "text-ink"
                   }`}
                 >
                   {t.odds}%

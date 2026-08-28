@@ -33,7 +33,7 @@ export default function NewsFeed({
             id="team-pick"
             value={teamId}
             onChange={(e) => pick(Number(e.target.value))}
-            className="bg-panel border border-edge rounded px-3 py-2 text-ice text-sm"
+            className="bg-panel border border-edge rounded px-3 py-2 text-ink text-sm"
           >
             <option value={0}>The whole bar</option>
             {teams.map((t) => (
@@ -68,7 +68,7 @@ export default function NewsFeed({
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-ice font-semibold hover:text-volt transition-colors"
+                  className="text-ink font-semibold hover:text-volt transition-colors"
                 >
                   {item.headline}
                 </a>

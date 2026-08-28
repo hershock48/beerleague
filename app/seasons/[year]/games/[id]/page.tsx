@@ -55,7 +55,7 @@ function PlayerCell({
   slug: string | undefined;
 }) {
   if (!p) return <td className="px-3 py-1.5 text-steel" colSpan={2}>–</td>;
-  const tone = won ? "text-ice" : "text-steel";
+  const tone = won ? "text-ink" : "text-steel";
   return (
     <>
       <td className={`px-3 py-1.5 ${tone}`}>
@@ -131,14 +131,14 @@ export default async function GamePage({
           {pregame && <span className="text-steel"> · not kicked off yet</span>}
         </p>
         <div className="flex flex-wrap items-baseline gap-x-6 gap-y-3">
-          <p className={`font-display text-2xl ${awayWon ? "text-volt glow" : "text-ice"}`}>
+          <p className={`font-display text-2xl ${awayWon ? "text-volt glow" : "text-ink"}`}>
             {box.away.name}{" "}
             <span className={`text-3xl ${awayWon ? "circled" : ""}`}>
               {box.away.pts?.toFixed(2) ?? "–"}
             </span>
           </p>
           <p className="text-steel">at</p>
-          <p className={`font-display text-2xl ${homeWon ? "text-volt glow" : "text-ice"}`}>
+          <p className={`font-display text-2xl ${homeWon ? "text-volt glow" : "text-ink"}`}>
             {box.home.name}{" "}
             <span className={`text-3xl ${homeWon ? "circled" : ""}`}>
               {box.home.pts?.toFixed(2) ?? "–"}

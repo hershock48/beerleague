@@ -28,7 +28,7 @@ export default async function StandingsPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-ice mb-6 scrawl">
+      <h1 className="font-display text-3xl text-ink mb-6 scrawl">
         Standings · {CURRENT_SEASON}
       </h1>
       <div className="space-y-8">
@@ -54,7 +54,7 @@ export default async function StandingsPage() {
                       <td className="px-4 py-3">
                         <Link
                           href={`/franchises/${franchiseSlug.get(t.id) ?? ""}`}
-                          className="text-ice hover:text-volt"
+                          className="text-ink hover:text-volt"
                         >
                           {t.name}
                         </Link>
@@ -62,13 +62,13 @@ export default async function StandingsPage() {
                           <span className="text-steel"> · {t.owners[0].displayName}</span>
                         )}
                       </td>
-                      <td className="px-4 py-3 text-ice">
+                      <td className="px-4 py-3 text-ink">
                         {t.recordOverall.formatted}
                       </td>
                       <td className="px-4 py-3 text-steel">
                         {t.recordDivision?.formatted ?? "–"}
                       </td>
-                      <td className="px-4 py-3 text-right text-ice">
+                      <td className="px-4 py-3 text-right text-ink">
                         {t.pointsFor?.formatted ?? "0"}
                       </td>
                       <td className="px-4 py-3 text-right text-steel">

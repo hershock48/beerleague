@@ -25,7 +25,7 @@ function Side({
   const left = score?.yetToPlay ?? 0;
   return (
     <div className="flex items-baseline justify-between gap-3">
-      <span className={winning ? "text-ice font-semibold" : "text-steel"}>
+      <span className={winning ? "text-ink font-semibold" : "text-steel"}>
         {name}
         {started && left > 0 && (
           <span className="text-xs text-steel font-normal"> · {left} left</span>
@@ -50,7 +50,7 @@ function GameCard({ game, mine }: { game: LiveGame; mine: boolean }) {
     <Link
       href={`/seasons/${CURRENT_SEASON}/games/${game.id}`}
       className={`panel p-4 flex flex-col gap-2 transition-colors hover:border-volt ${
-        mine ? "border-volt/70 shadow-[0_0_18px_rgb(198_245_63/0.18)]" : ""
+        mine ? "border-volt/70 shadow-[0_2px_10px_rgb(76_112_0/0.2)]" : ""
       }`}
     >
       <Side

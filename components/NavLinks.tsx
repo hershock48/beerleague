@@ -9,6 +9,7 @@ const NAV = [
   { href: "/", label: "Tap Room" },
   { href: "/scores", label: "Scores" },
   { href: "/standings", label: "Standings" },
+  { href: "/draft", label: "Draft" },
   { href: "/rankings", label: "Rankings" },
   { href: "/recaps", label: "Recaps" },
   { href: "/seasons", label: "Seasons" },

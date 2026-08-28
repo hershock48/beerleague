@@ -25,7 +25,7 @@ export default function PlayerSearch({ rows }: { rows: PlayerIndexRow[] }) {
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Who you looking for, coach?"
-          className="w-full max-w-md bg-panel border border-edge rounded px-4 py-3 text-ice placeholder:text-steel"
+          className="w-full max-w-md bg-panel border border-edge rounded px-4 py-3 text-ink placeholder:text-steel"
         />
       </div>
       {shown.length === 0 ? (
@@ -56,7 +56,7 @@ export default function PlayerSearch({ rows }: { rows: PlayerIndexRow[] }) {
                   <td className="px-4 py-2">
                     <Link
                       href={`/players/${r.slug}`}
-                      className="text-ice hover:text-volt"
+                      className="text-ink hover:text-volt"
                     >
                       {r.name}
                     </Link>

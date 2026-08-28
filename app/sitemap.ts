@@ -18,6 +18,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: BASE },
     { url: `${BASE}/scores` },
     { url: `${BASE}/standings` },
+    { url: `${BASE}/draft` },
     { url: `${BASE}/rankings` },
     { url: `${BASE}/recaps` },
     { url: `${BASE}/seasons` },

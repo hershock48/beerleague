@@ -17,7 +17,7 @@ export default async function PlayersPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-ice mb-2 scrawl">
+      <h1 className="font-display text-3xl text-ink mb-2 scrawl">
         The Roster Wall
       </h1>
       <p className="text-steel mb-8 max-w-2xl">

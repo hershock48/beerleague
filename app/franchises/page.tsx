@@ -31,7 +31,7 @@ export default async function FranchisesPage() {
       href={`/franchises/${f.slug}`}
       className="panel block p-4 hover:border-volt transition-colors"
     >
-      <p className="text-ice font-semibold">
+      <p className="text-ink font-semibold">
         {f.currentName}
         {f.championships.length > 0 && (
           <span className="text-volt"> {"🏆".repeat(f.championships.length)}</span>
@@ -53,7 +53,7 @@ export default async function FranchisesPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-ice mb-8 scrawl">Franchises</h1>
+      <h1 className="font-display text-3xl text-ink mb-8 scrawl">Franchises</h1>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {active.map((f) => (
           <Card key={f.id} f={f} />

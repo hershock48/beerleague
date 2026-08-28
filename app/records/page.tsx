@@ -25,7 +25,7 @@ export default async function RecordsPage() {
   const TeamLink = ({ id, name }: { id: number; name: string }) => (
     <Link
       href={`/franchises/${slugOf.get(id) ?? ""}`}
-      className="text-ice hover:text-volt"
+      className="text-ink hover:text-volt"
     >
       {name}
     </Link>
@@ -41,9 +41,9 @@ export default async function RecordsPage() {
     slugOf: Record<string, string>;
   }) => {
     const slug = id != null ? slugOf[id] : undefined;
-    if (!slug) return <span className="text-ice">{name}</span>;
+    if (!slug) return <span className="text-ink">{name}</span>;
     return (
-      <Link href={`/players/${slug}`} className="text-ice hover:text-volt">
+      <Link href={`/players/${slug}`} className="text-ink hover:text-volt">
         {name}
       </Link>
     );
@@ -75,7 +75,7 @@ export default async function RecordsPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-ice mb-2 scrawl">The Record Book</h1>
+      <h1 className="font-display text-3xl text-ink mb-2 scrawl">The Record Book</h1>
       <p className="text-steel mb-6 max-w-2xl">
         {derived.totals.games.toLocaleString("en-US")} games and{" "}
         {derived.totals.playerPerformances.toLocaleString("en-US")} player

@@ -1,42 +1,44 @@
 @import "tailwindcss";
 
 /*
-  The Beer League: the neon sign, not the wood paneling.
-  The 2026-08-28 re-ink after Kevin called the brown-and-amber scheme dead:
-  cool ink grounds, electric volt green as the neon primary, sign-pink as
-  the second neon, chalk-white playbook strokes. Dark-first stays (it is a
-  scores app); the warmth left with the sepia.
+  The Beer League: the paper playbook.
+  Third ink (2026-08-28): Kevin ruled the dark ground out entirely, so the
+  bar's neon sign became the coach's paper playbook in daylight. Bright
+  paper grounds, real ink for text, and the two accents survive as marker
+  colors: volt green gone to felt-tip, sign pink gone to ink stamp. The
+  X's and O's are pencil now.
 
   Every token is validated against EVERY ground it can land on.
   Contrast (WCAG, computed 2026-08-28 against ground / surface / panel):
-    ice    17.17 / 15.79 / 14.55
-    steel   7.91 /  7.27 /  6.70
-    volt   15.22 / 13.99 / 12.89
-    pink    7.65 /  7.03 /  6.48
-    win    12.13 / 11.16 / 10.28
-    loss    8.17 /  7.51 /  6.92
-    chalk  14.61 / 13.44 / 12.38
+    ink    14.78 / 13.53 / 15.57
+    steel   5.84 /  5.34 /  6.15
+    volt    5.50 /  5.04 /  5.79
+    pink    5.27 /  4.82 /  5.55
+    win     5.13 /  4.69 /  5.40
+    loss    5.73 /  5.25 /  6.04
+    chalk   1.74 /  1.59 /  1.83  <- decorative pencil strokes ONLY,
+           never text; it carries no contrast duty.
 */
 
 @theme {
-  --color-ground: #0b0e13;
-  --color-surface: #131822;
-  --color-panel: #1a2029;
-  --color-edge: #2a3240;
-  --color-ice: #edf2f8;
-  --color-steel: #9aa7b8;
-  --color-volt: #c6f53f;
-  --color-pink: #ff6ec7;
-  --color-win: #86e27c;
-  --color-loss: #ff8578;
+  --color-ground: #faf9f5;
+  --color-surface: #f1efe8;
+  --color-panel: #ffffff;
+  --color-edge: #ddd9ce;
+  --color-ink: #20242b;
+  --color-steel: #5a6270;
+  --color-volt: #4c7000;
+  --color-pink: #c21e7f;
+  --color-win: #1e7a34;
+  --color-loss: #b3362a;
 
   --font-display: var(--font-display), "Georgia", serif;
   --font-body: var(--font-body), "Georgia", serif;
   --font-marker: var(--font-marker), "Comic Sans MS", cursive;
 
-  /* Chalk, for the playbook strokes (X's, O's, route arrows, squiggles)
-     and the occasional label. */
-  --color-chalk: #d8e1ea;
+  /* Chalk is pencil now: the playbook strokes (X's, O's, route arrows,
+     squiggles). Decorative only, never text (see contrast table). */
+  --color-chalk: #b9c0cb;
 }
 
 html {
@@ -45,25 +47,25 @@ html {
 
 body {
   background-color: var(--color-ground);
-  /* Smoky ambient light: the room catches the two neons, volt from the
-     upper left, pink from the upper right. Lighting, not decoration; both
-     stay under 8% so no text ever sits on a meaningfully different ground. */
+  /* A wash of the two marker colors bleeding through the paper from the
+     top corners. Lighting, not decoration; both stay faint enough that no
+     text ever sits on a meaningfully different ground. */
   background-image:
-    radial-gradient(60rem 40rem at 12% -8%, rgb(198 245 63 / 0.06), transparent 60%),
-    radial-gradient(50rem 36rem at 96% -4%, rgb(255 110 199 / 0.05), transparent 60%);
+    radial-gradient(60rem 40rem at 12% -8%, rgb(76 112 0 / 0.05), transparent 60%),
+    radial-gradient(50rem 36rem at 96% -4%, rgb(194 30 127 / 0.04), transparent 60%);
   background-repeat: no-repeat;
-  color: var(--color-ice);
+  color: var(--color-ink);
   font-family: var(--font-body);
   /* A 38-char email once overflowed a document through a bare text node
      no rect could see; break-word at the body is the account-wide fix. */
   overflow-wrap: break-word;
 }
 
-/* The playbook wall: faint chalk X's and O's scattered over the wood.
-   4% opacity strokes; texture, not content, so it carries no contrast
-   duty and must never rise to where it competes with text. */
+/* The playbook page: faint pencil X's and O's under the content.
+   Texture, not content; it carries no contrast duty and must never rise
+   to where it competes with text. */
 main {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg stroke='%23d8e1ea' stroke-opacity='0.05' fill='none' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M28 34l14 14M42 34L28 48'/%3E%3Ccircle cx='120' cy='70' r='9'/%3E%3Cpath d='M196 26l14 14M210 26l-14 14'/%3E%3Ccircle cx='58' cy='150' r='9'/%3E%3Cpath d='M150 138l14 14M164 138l-14 14'/%3E%3Ccircle cx='226' cy='118' r='9'/%3E%3Cpath d='M96 216l14 14M110 216l-14 14'/%3E%3Ccircle cx='186' cy='226' r='9'/%3E%3Cpath d='M30 226q30 -22 58 0' stroke-dasharray='5 7'/%3E%3Cpath d='M126 96q34 18 66 -8' stroke-dasharray='5 7'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg stroke='%23b9c0cb' stroke-opacity='0.35' fill='none' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M28 34l14 14M42 34L28 48'/%3E%3Ccircle cx='120' cy='70' r='9'/%3E%3Cpath d='M196 26l14 14M210 26l-14 14'/%3E%3Ccircle cx='58' cy='150' r='9'/%3E%3Cpath d='M150 138l14 14M164 138l-14 14'/%3E%3Ccircle cx='226' cy='118' r='9'/%3E%3Cpath d='M96 216l14 14M110 216l-14 14'/%3E%3Ccircle cx='186' cy='226' r='9'/%3E%3Cpath d='M30 226q30 -22 58 0' stroke-dasharray='5 7'/%3E%3Cpath d='M126 96q34 18 66 -8' stroke-dasharray='5 7'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 /* Coach's marker: the annotation voice. Neon by default, accent-sized,
@@ -78,7 +80,7 @@ main {
   position: relative;
   display: inline-block;
   padding-bottom: 0.45rem;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='10' viewBox='0 0 220 10'%3E%3Cpath d='M4 6 C 40 1, 70 9, 110 5 S 180 2, 216 6' stroke='%23c6f53f' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='10' viewBox='0 0 220 10'%3E%3Cpath d='M4 6 C 40 1, 70 9, 110 5 S 180 2, 216 6' stroke='%234c7000' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: left bottom;
   background-size: min(100%, 220px) 10px;
@@ -98,9 +100,9 @@ main {
   width: 74px;
   height: 20px;
   transform: translateX(-50%) rotate(-2deg);
-  background: rgb(237 242 248 / 0.14);
-  border-left: 1px solid rgb(237 242 248 / 0.08);
-  border-right: 1px solid rgb(237 242 248 / 0.08);
+  background: rgb(32 36 43 / 0.07);
+  border-left: 1px solid rgb(32 36 43 / 0.05);
+  border-right: 1px solid rgb(32 36 43 / 0.05);
   pointer-events: none;
 }
 .tilt-l {
@@ -112,7 +114,7 @@ main {
 
 /* The coach's circle: a hand-drawn ring around the number that won. */
 .circled {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='56' viewBox='0 0 120 56'%3E%3Cpath d='M14 28 C 12 12, 46 5, 68 7 C 96 9, 112 16, 109 29 C 106 44, 78 51, 52 49 C 26 47, 12 41, 15 25' stroke='%23c6f53f' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='56' viewBox='0 0 120 56'%3E%3Cpath d='M14 28 C 12 12, 46 5, 68 7 C 96 9, 112 16, 109 29 C 106 44, 78 51, 52 49 C 26 47, 12 41, 15 25' stroke='%234c7000' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
@@ -126,11 +128,10 @@ body {
 
 ::selection {
   background: var(--color-volt);
-  color: var(--color-ground);
+  color: #ffffff;
 }
 
-/* Keyboard focus must be visible on a near-black ground; the browser default
-   ring can vanish into it. Volt, offset so it never melts into a border. */
+/* Keyboard focus, in marker volt, offset so it never melts into a border. */
 :focus-visible {
   outline: 2px solid var(--color-volt);
   outline-offset: 2px;
@@ -157,24 +158,19 @@ body {
 /* The neon glow: layered like tube light, not a single blur. One place,
    reused by the wordmark, champions and circled scores. */
 .glow {
-  text-shadow:
-    0 0 6px rgb(198 245 63 / 0.55),
-    0 0 24px rgb(198 245 63 / 0.3),
-    0 0 52px rgb(198 245 63 / 0.18);
+  text-shadow: 0 1px 0 rgb(76 112 0 / 0.18), 0 0 18px rgb(76 112 0 / 0.16);
 }
 .glow-pink {
-  text-shadow:
-    0 0 6px rgb(255 110 199 / 0.55),
-    0 0 24px rgb(255 110 199 / 0.3),
-    0 0 52px rgb(255 110 199 / 0.18);
+  text-shadow: 0 1px 0 rgb(194 30 127 / 0.16), 0 0 18px rgb(194 30 127 / 0.15);
 }
 
 /* Panel: the card every module sits on, lit faintly from the top left the
    way a wall catches a neon sign. */
 .panel {
-  background: linear-gradient(160deg, var(--color-panel), var(--color-surface) 70%);
+  background: var(--color-panel);
   border: 1px solid var(--color-edge);
   border-radius: 0.5rem;
+  box-shadow: 0 1px 2px rgb(32 36 43 / 0.05);
 }
 
 /* Small caps label used for section headers. */

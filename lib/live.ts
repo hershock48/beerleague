@@ -113,6 +113,27 @@ export function getLiveBoxRaw(gameId: string): Promise<unknown | null> {
   );
 }
 
+export interface LiveDraftCell {
+  team?: { id?: number; name?: string };
+  player?: {
+    proPlayer?: { id?: number; nameFull?: string; position?: string; proTeamAbbreviation?: string };
+  };
+}
+
+export interface LiveDraftBoard {
+  draftOrder?: { id: number; name: string }[];
+  rows?: { round?: number; cells?: LiveDraftCell[] }[];
+}
+
+/** The live draft board, cached 20s so draft night feels live without
+ *  hammering Fleaflicker. Empty rows before the draft starts. */
+export function getLiveDraftBoard(): Promise<LiveDraftBoard | null> {
+  return fetchJson<LiveDraftBoard>(
+    apiUrl("FetchLeagueDraftBoard", { season: CURRENT_SEASON }),
+    20,
+  );
+}
+
 export interface Transaction {
   timeEpochMilli?: string;
   transaction?: {

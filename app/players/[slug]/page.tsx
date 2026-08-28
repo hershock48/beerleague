@@ -67,7 +67,7 @@ export default async function PlayerPage({
         >
           {isDefense ? "X" : "O"}
         </span>
-        <h1 className="font-display text-3xl text-ice scrawl">{p.name}</h1>
+        <h1 className="font-display text-3xl text-ink scrawl">{p.name}</h1>
       </div>
       <p className="text-steel mb-8">
         {p.pos}
@@ -84,12 +84,12 @@ export default async function PlayerPage({
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-10">
         <div className="panel p-4">
           <p className="plate">Career points</p>
-          <p className="text-2xl text-ice mt-1">{p.startedPts.toFixed(2)}</p>
+          <p className="text-2xl text-ink mt-1">{p.startedPts.toFixed(2)}</p>
           <p className="text-sm text-steel">as a starter</p>
         </div>
         <div className="panel p-4">
           <p className="plate">Starts</p>
-          <p className="text-2xl text-ice mt-1">{p.startedGames}</p>
+          <p className="text-2xl text-ink mt-1">{p.startedGames}</p>
           <p className="text-sm text-steel">
             {p.startedGames > 0
               ? `${(p.startedPts / p.startedGames).toFixed(2)} a game`
@@ -98,7 +98,7 @@ export default async function PlayerPage({
         </div>
         <div className="panel p-4">
           <p className="plate">Best night</p>
-          <p className="text-2xl text-ice mt-1">
+          <p className="text-2xl text-ink mt-1">
             {p.topGames[0] ? p.topGames[0].pts.toFixed(2) : "–"}
           </p>
           {p.topGames[0] && (
@@ -109,7 +109,7 @@ export default async function PlayerPage({
         </div>
         <div className="panel p-4">
           <p className="plate">Benched</p>
-          <p className="text-2xl text-ice mt-1">{p.benchGames}</p>
+          <p className="text-2xl text-ink mt-1">{p.benchGames}</p>
           <p className="text-sm text-steel">
             weeks · {p.benchPts.toFixed(2)} pts wasted
           </p>
@@ -149,15 +149,15 @@ export default async function PlayerPage({
                     <td className="px-4 py-2">
                       <Link
                         href={`/franchises/${franchiseSlug.get(s.teamId) ?? ""}`}
-                        className="text-ice hover:text-volt"
+                        className="text-ink hover:text-volt"
                       >
                         {s.team}
                       </Link>
                     </td>
-                    <td className="px-4 py-2 text-right text-ice">
+                    <td className="px-4 py-2 text-right text-ink">
                       {s.startedGames}
                     </td>
-                    <td className="px-4 py-2 text-right text-ice">
+                    <td className="px-4 py-2 text-right text-ink">
                       {s.startedPts.toFixed(2)}
                     </td>
                     <td className="px-4 py-2 text-right text-steel">

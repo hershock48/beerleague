@@ -71,7 +71,7 @@ export default async function RecapPage({
             ← All recaps
           </Link>
         </p>
-        <h1 className="font-display text-3xl text-ice mb-3 scrawl">
+        <h1 className="font-display text-3xl text-ink mb-3 scrawl">
           Week {week}, {year}
         </h1>
         <p className="text-steel">
@@ -90,8 +90,8 @@ export default async function RecapPage({
         </Link>
       </p>
       <p className="plate mb-1">The Recap</p>
-      <h1 className="font-display text-3xl text-ice mb-4 scrawl">{recap.title}</h1>
-      <p className="text-lg text-ice mb-8">{recap.lede}</p>
+      <h1 className="font-display text-3xl text-ink mb-4 scrawl">{recap.title}</h1>
+      <p className="text-lg text-ink mb-8">{recap.lede}</p>
 
       <section className="mb-10">
         <h2 className="plate mb-3">The Hardware</h2>
@@ -99,7 +99,7 @@ export default async function RecapPage({
           {recap.awards.map((a) => (
             <li key={a.label} className="panel p-4">
               <p className={`marker ${TONE[a.tone]} mb-1`}>{a.label}</p>
-              <p className="text-ice font-semibold">{a.who}</p>
+              <p className="text-ink font-semibold">{a.who}</p>
               <p className="text-sm text-steel mt-1">{a.detail}</p>
             </li>
           ))}
@@ -128,10 +128,10 @@ export default async function RecapPage({
         <ol className="panel p-4 grid gap-x-8 gap-y-1 sm:grid-cols-2 text-sm">
           {recap.standings.map((s, i) => (
             <li key={s.name} className="flex justify-between gap-3">
-              <span className={i === 0 ? "text-ice" : "text-steel"}>
+              <span className={i === 0 ? "text-ink" : "text-steel"}>
                 {i + 1}. {s.name}
               </span>
-              <span className={i === recap.standings.length - 1 ? "text-loss" : "text-ice"}>
+              <span className={i === recap.standings.length - 1 ? "text-loss" : "text-ink"}>
                 {s.record}
               </span>
             </li>

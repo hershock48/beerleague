@@ -29,7 +29,7 @@ export default function YourStool({ teams }: { teams: StoolTeam[] }) {
           <span className="marker text-volt">Your stool:</span>
           <Link
             href={`/franchises/${mine.slug}`}
-            className="text-ice font-semibold hover:text-volt"
+            className="text-ink font-semibold hover:text-volt"
           >
             {mine.name}
           </Link>
@@ -64,7 +64,7 @@ export default function YourStool({ teams }: { teams: StoolTeam[] }) {
             id="stool-pick"
             value={0}
             onChange={(e) => writeMyTeam(Number(e.target.value))}
-            className="bg-panel border border-edge rounded px-3 py-2 text-ice"
+            className="bg-panel border border-edge rounded px-3 py-2 text-ink"
           >
             <option value={0}>Whose team are you?</option>
             {teams.map((t) => (

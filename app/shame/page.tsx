@@ -65,7 +65,7 @@ export default async function ShamePage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-ice mb-2 scrawl">
+      <h1 className="font-display text-3xl text-ink mb-2 scrawl">
         The Wall of Shame
       </h1>
       <p className="text-steel mb-10 max-w-2xl">
@@ -101,7 +101,7 @@ export default async function ShamePage() {
                     <td className="px-4 py-2">
                       <Link
                         href={`/franchises/${slugOf.get(p.team.id) ?? ""}`}
-                        className="text-ice hover:text-volt"
+                        className="text-ink hover:text-volt"
                       >
                         {p.team.name}
                       </Link>
@@ -126,7 +126,7 @@ export default async function ShamePage() {
                 <li key={s.id} className="flex justify-between gap-3">
                   <Link
                     href={`/franchises/${slugOf.get(s.id) ?? ""}`}
-                    className="text-ice hover:text-volt"
+                    className="text-ink hover:text-volt"
                   >
                     {s.name}
                   </Link>
@@ -146,7 +146,7 @@ export default async function ShamePage() {
             <ol className="panel p-4 space-y-2 text-sm">
               {worstCareers.map((f) => (
                 <li key={f.id} className="flex justify-between gap-3">
-                  <Link href={`/franchises/${f.slug}`} className="text-ice hover:text-volt">
+                  <Link href={`/franchises/${f.slug}`} className="text-ink hover:text-volt">
                     {f.name}
                   </Link>
                   <span className="text-steel">

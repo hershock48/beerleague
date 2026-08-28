@@ -57,7 +57,7 @@ async function TrendingSection() {
       <ol className="panel p-4 space-y-2 text-sm">
         {trending.map((p) => (
           <li key={p.name} className="flex justify-between gap-2">
-            <span className="text-ice">
+            <span className="text-ink">
               {p.name}{" "}
               <span className="text-steel">
                 {p.position} · {p.nflTeam}
@@ -84,11 +84,11 @@ async function MovesSection() {
           if (!t?.team?.name || !player) return null;
           return (
             <li key={i}>
-              <span className="text-ice">{t.team.name}</span>{" "}
+              <span className="text-ink">{t.team.name}</span>{" "}
               <span className="text-steel">
                 {TX_LABELS[t.type ?? ""] ?? "moved"}
               </span>{" "}
-              <span className="text-ice">{player.nameFull}</span>
+              <span className="text-ink">{player.nameFull}</span>
               <span className="text-steel">
                 {" "}
                 · {player.position} {player.proTeamAbbreviation}
@@ -138,7 +138,7 @@ export default async function Home() {
       <section>
         <div className="flex items-start justify-between gap-6 mb-6">
           <div>
-            <h1 className="font-display text-3xl sm:text-4xl text-ice mb-1 scrawl">
+            <h1 className="font-display text-3xl sm:text-4xl text-ink mb-1 scrawl">
               The Tap Room
             </h1>
             <p className="text-steel">
@@ -188,14 +188,14 @@ export default async function Home() {
               <div className="panel divide-y divide-edge">
                 {standings.divisions.map((div) => (
                   <div key={div.id} className="p-4">
-                    <h3 className="text-sm text-ice font-semibold mb-2">
+                    <h3 className="text-sm text-ink font-semibold mb-2">
                       {div.name}
                     </h3>
                     <ol className="space-y-1 text-sm">
                       {div.teams.map((t) => (
                         <li key={t.id} className="flex justify-between gap-2">
                           <span className="text-steel">{t.name}</span>
-                          <span className="text-ice">
+                          <span className="text-ink">
                             {t.recordOverall.formatted}
                           </span>
                         </li>
@@ -221,7 +221,7 @@ export default async function Home() {
               {derived.records.highWeeks[0] && (
                 <li>
                   <span className="text-steel">Highest week ever:</span>{" "}
-                  <span className="text-ice">
+                  <span className="text-ink">
                     {derived.records.highWeeks[0].name},{" "}
                     {derived.records.highWeeks[0].pts.toFixed(2)}
                   </span>{" "}
@@ -233,7 +233,7 @@ export default async function Home() {
               {derived.records.nailBiters[0] && (
                 <li>
                   <span className="text-steel">Closest game:</span>{" "}
-                  <span className="text-ice">
+                  <span className="text-ink">
                     {Math.abs(
                       derived.records.nailBiters[0].away.pts -
                         derived.records.nailBiters[0].home.pts,
@@ -248,7 +248,7 @@ export default async function Home() {
               {derived.records.playerHighs[0] && (
                 <li>
                   <span className="text-steel">Best game ever started:</span>{" "}
-                  <span className="text-ice">
+                  <span className="text-ink">
                     {derived.records.playerHighs[0].player},{" "}
                     {derived.records.playerHighs[0].pts.toFixed(2)}
                   </span>{" "}
