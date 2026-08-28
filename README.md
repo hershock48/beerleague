@@ -42,6 +42,7 @@ After the season ends (or any time you want the archive current):
 node tools/sync.mjs
 node tools/derive.mjs
 node tools/derive-players.mjs
+node tools/derive-analytics.mjs
 git add data && git commit && git push
 ```
 

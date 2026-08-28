@@ -14,6 +14,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/franchises` },
     { url: `${BASE}/players` },
     { url: `${BASE}/records` },
+    { url: `${BASE}/ledger` },
     ...derived.seasons.map((s) => ({ url: `${BASE}/seasons/${s.year}` })),
     ...Object.values(derived.franchises).map((f) => ({
       url: `${BASE}/franchises/${f.slug}`,

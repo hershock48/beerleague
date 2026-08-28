@@ -13,6 +13,7 @@ const NAV = [
   { href: "/franchises", label: "Franchises" },
   { href: "/players", label: "Players" },
   { href: "/records", label: "Record Book" },
+  { href: "/ledger", label: "The Ledger" },
 ] as const;
 
 export default function NavLinks() {
