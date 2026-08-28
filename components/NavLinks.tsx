@@ -11,6 +11,7 @@ const NAV = [
   { href: "/standings", label: "Standings" },
   { href: "/seasons", label: "Seasons" },
   { href: "/franchises", label: "Franchises" },
+  { href: "/players", label: "Players" },
   { href: "/records", label: "Record Book" },
 ] as const;
 

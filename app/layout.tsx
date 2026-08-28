@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Alfa_Slab_One, Bitter } from "next/font/google";
+import { Alfa_Slab_One, Bitter, Permanent_Marker } from "next/font/google";
 import Link from "next/link";
 import NavLinks from "@/components/NavLinks";
 import { LEAGUE_NAME, FIRST_SEASON, FLEAFLICKER_URL } from "@/lib/league";
@@ -14,6 +14,13 @@ const display = Alfa_Slab_One({
   variable: "--font-display",
 });
 const body = Bitter({ subsets: ["latin"], variable: "--font-body" });
+// The coach's handwriting. Annotations only: tags, circled years, the 404.
+// Never running text; Bitter carries anything longer than a phrase.
+const marker = Permanent_Marker({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-marker",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://beerleague.glazedweb.com"),
@@ -42,7 +49,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable}`}>
+    <html lang="en" className={`${display.variable} ${body.variable} ${marker.variable}`}>
       <body className="min-h-screen flex flex-col">
         <a
           href="#main"

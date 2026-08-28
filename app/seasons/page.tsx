@@ -14,7 +14,7 @@ export default async function SeasonsPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-cream mb-2">The Back Room</h1>
+      <h1 className="font-display text-3xl text-cream mb-2 scrawl">The Back Room</h1>
       <p className="text-parch mb-8 max-w-2xl">
         {done.length} completed seasons on the wall. {CANDY_ERA_NOTE}
       </p>

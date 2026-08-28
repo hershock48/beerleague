@@ -28,7 +28,7 @@ export default async function StandingsPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-cream mb-6">
+      <h1 className="font-display text-3xl text-cream mb-6 scrawl">
         Standings · {CURRENT_SEASON}
       </h1>
       <div className="space-y-8">

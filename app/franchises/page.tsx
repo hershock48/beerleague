@@ -53,7 +53,7 @@ export default async function FranchisesPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-cream mb-8">Franchises</h1>
+      <h1 className="font-display text-3xl text-cream mb-8 scrawl">Franchises</h1>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {active.map((f) => (
           <Card key={f.id} f={f} />

@@ -53,7 +53,7 @@ export default async function RecordsPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-cream mb-2">The Record Book</h1>
+      <h1 className="font-display text-3xl text-cream mb-2 scrawl">The Record Book</h1>
       <p className="text-parch mb-6 max-w-2xl">
         {derived.totals.games.toLocaleString("en-US")} games and{" "}
         {derived.totals.playerPerformances.toLocaleString("en-US")} player
@@ -88,7 +88,7 @@ export default async function RecordsPage() {
       <div className="grid gap-10 lg:grid-cols-2">
         <section id="high-weeks" className="scroll-mt-4">
           <h2 className="plate mb-3">Highest Team Scores, Ever</h2>
-          <ol className="panel p-4 space-y-2 text-sm">
+          <ol className="panel p-4 space-y-2 text-sm taped tilt-l mt-3">
             {r.highWeeks.map((w, i) => (
               <li key={i} className="flex justify-between gap-3">
                 <span>
@@ -110,7 +110,7 @@ export default async function RecordsPage() {
 
         <section id="low-weeks" className="scroll-mt-4">
           <h2 className="plate mb-3">Worst Nights at the Bar</h2>
-          <ol className="panel p-4 space-y-2 text-sm">
+          <ol className="panel p-4 space-y-2 text-sm taped tilt-r mt-3">
             {r.lowWeeks.map((w, i) => (
               <li key={i} className="flex justify-between gap-3">
                 <span>
@@ -132,7 +132,7 @@ export default async function RecordsPage() {
 
         <section id="blowouts" className="scroll-mt-4">
           <h2 className="plate mb-3">Biggest Blowouts</h2>
-          <ol className="panel p-4 space-y-2 text-sm">
+          <ol className="panel p-4 space-y-2 text-sm taped tilt-l mt-3">
             {r.blowouts.map((g, i) => (
               <GameLine key={i} g={g} />
             ))}
@@ -141,7 +141,7 @@ export default async function RecordsPage() {
 
         <section id="nail-biters" className="scroll-mt-4">
           <h2 className="plate mb-3">Nail-Biters</h2>
-          <ol className="panel p-4 space-y-2 text-sm">
+          <ol className="panel p-4 space-y-2 text-sm taped tilt-r mt-3">
             {r.nailBiters.map((g, i) => (
               <GameLine key={i} g={g} />
             ))}
@@ -150,7 +150,7 @@ export default async function RecordsPage() {
 
         <section id="player-highs" className="scroll-mt-4">
           <h2 className="plate mb-3">Best Player Games Ever Started</h2>
-          <ol className="panel p-4 space-y-2 text-sm">
+          <ol className="panel p-4 space-y-2 text-sm taped tilt-l mt-3">
             {r.playerHighs.slice(0, 15).map((p, i) => (
               <li key={i} className="flex justify-between gap-3">
                 <span>
@@ -175,7 +175,7 @@ export default async function RecordsPage() {
           <p className="text-xs text-parch mb-2">
             The biggest games ever scored by a player whose manager sat him.
           </p>
-          <ol className="panel p-4 space-y-2 text-sm">
+          <ol className="panel p-4 space-y-2 text-sm taped tilt-r mt-3">
             {r.benchTragedies.map((p, i) => (
               <li key={i} className="flex justify-between gap-3">
                 <span>
@@ -197,7 +197,7 @@ export default async function RecordsPage() {
 
         <section id="season-pf" className="scroll-mt-4">
           <h2 className="plate mb-3">Best Seasons by Points</h2>
-          <ol className="panel p-4 space-y-2 text-sm">
+          <ol className="panel p-4 space-y-2 text-sm taped tilt-l mt-3">
             {r.seasonPF.map((s, i) => (
               <li key={i} className="flex justify-between gap-3">
                 <span>
@@ -218,7 +218,7 @@ export default async function RecordsPage() {
 
         <section id="streaks" className="scroll-mt-4">
           <h2 className="plate mb-3">Longest Streaks</h2>
-          <ol className="panel p-4 space-y-2 text-sm">
+          <ol className="panel p-4 space-y-2 text-sm taped tilt-r mt-3">
             {r.streaks.map((s, i) => (
               <li key={i} className="flex justify-between gap-3">
                 <span>
@@ -241,7 +241,7 @@ export default async function RecordsPage() {
           list.length === 0 ? null : (
             <section key={pos}>
               <h2 className="plate mb-3">Best {pos} Games</h2>
-              <ol className="panel p-4 space-y-2 text-sm">
+              <ol className="panel p-4 space-y-2 text-sm taped tilt-l mt-3">
                 {list.map((p, i) => (
                   <li key={i} className="flex justify-between gap-3">
                     <span>

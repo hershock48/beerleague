@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <div className="py-16 text-center">
-      <p className="font-display text-5xl text-amber glow mb-4">404</p>
+      <p className="marker text-6xl text-amber glow mb-4 -rotate-2">404</p>
       <h1 className="text-xl text-cream mb-2">That one&apos;s not on tap.</h1>
       <p className="text-parch mb-8">
         The page you asked for is not behind this bar.

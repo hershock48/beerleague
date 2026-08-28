@@ -110,15 +110,19 @@ export default async function GamePage({
           {live && <span className="text-win"> · live, refreshes each minute</span>}
           {pregame && <span className="text-parch"> · not kicked off yet</span>}
         </p>
-        <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1">
+        <div className="flex flex-wrap items-baseline gap-x-6 gap-y-3">
           <p className={`font-display text-2xl ${awayWon ? "text-amber glow" : "text-cream"}`}>
             {box.away.name}{" "}
-            <span className="text-3xl">{box.away.pts?.toFixed(2) ?? "–"}</span>
+            <span className={`text-3xl ${awayWon ? "circled" : ""}`}>
+              {box.away.pts?.toFixed(2) ?? "–"}
+            </span>
           </p>
           <p className="text-parch">at</p>
           <p className={`font-display text-2xl ${homeWon ? "text-amber glow" : "text-cream"}`}>
             {box.home.name}{" "}
-            <span className="text-3xl">{box.home.pts?.toFixed(2) ?? "–"}</span>
+            <span className={`text-3xl ${homeWon ? "circled" : ""}`}>
+              {box.home.pts?.toFixed(2) ?? "–"}
+            </span>
           </p>
         </div>
       </div>

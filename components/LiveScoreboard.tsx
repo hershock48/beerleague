@@ -68,7 +68,7 @@ function GameCard({ game, mine }: { game: LiveGame; mine: boolean }) {
       <p className="text-xs text-parch pt-1 border-t border-edge flex justify-between">
         <span>
           {mine ? (
-            <span className="text-amber">Your matchup</span>
+            <span className="text-amber marker">Your matchup</span>
           ) : game.isDivisional ? (
             "Division game"
           ) : (

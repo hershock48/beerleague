@@ -76,7 +76,7 @@ export default function NewsFeed({
                   {item.description}
                 </p>
                 {why && (
-                  <p className="text-xs text-amber mt-2">On your card: {why}</p>
+                  <p className="text-xs text-amber mt-2 marker">On your card: {why}</p>
                 )}
               </li>
             );

@@ -83,8 +83,10 @@ export default async function FranchisePage({
         <div className="panel p-4">
           <p className="plate">Championships</p>
           <p className="text-2xl text-cream mt-1">{f.championships.length}</p>
-          <p className="text-sm text-parch">
-            {f.championships.length > 0 ? f.championships.join(", ") : "still thirsty"}
+          <p className={`text-sm marker ${f.championships.length > 0 ? "text-amber" : "text-parch"}`}>
+            {f.championships.length > 0
+              ? f.championships.map((y) => `'${String(y).slice(2)}`).join("  ")
+              : "still thirsty"}
           </p>
         </div>
         <div className="panel p-4">

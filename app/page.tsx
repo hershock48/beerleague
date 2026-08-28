@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 import LiveScoreboard from "@/components/LiveScoreboard";
 import NewsFeed from "@/components/NewsFeed";
+import PlayDiagram from "@/components/PlayDiagram";
 import { getScoreboard, getStandings, getTransactions } from "@/lib/live";
 import { getNews, getTrending } from "@/lib/news";
 import { getDerived } from "@/lib/archive";
@@ -117,19 +118,24 @@ export default async function Home() {
   return (
     <div className="space-y-12">
       <section>
-        <h1 className="font-display text-3xl sm:text-4xl text-cream mb-1">
-          The Tap Room
-        </h1>
-        <p className="text-parch mb-6">
-          Season {CURRENT_SEASON}.{" "}
-          {lastChampSeason?.champion && (
-            <>
-              Defending champion:{" "}
-              <span className="text-amber">{lastChampSeason.champion.name}</span>{" "}
-              ({lastChampSeason.year}).
-            </>
-          )}
-        </p>
+        <div className="flex items-start justify-between gap-6 mb-6">
+          <div>
+            <h1 className="font-display text-3xl sm:text-4xl text-cream mb-1 scrawl">
+              The Tap Room
+            </h1>
+            <p className="text-parch">
+              Season {CURRENT_SEASON}.{" "}
+              {lastChampSeason?.champion && (
+                <>
+                  Defending champion:{" "}
+                  <span className="text-amber">{lastChampSeason.champion.name}</span>{" "}
+                  ({lastChampSeason.year}).
+                </>
+              )}
+            </p>
+          </div>
+          <PlayDiagram className="hidden md:block w-56 h-auto shrink-0 -mt-3" />
+        </div>
         {board ? (
           <LiveScoreboard initial={board} week={week} />
         ) : (

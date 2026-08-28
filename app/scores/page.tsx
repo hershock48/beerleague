@@ -37,7 +37,7 @@ export default async function ScoresPage({
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-cream mb-6">
+      <h1 className="font-display text-3xl text-cream mb-6 scrawl">
         Scores · {CURRENT_SEASON}
       </h1>
       {weeks.length > 0 && (
