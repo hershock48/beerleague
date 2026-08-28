@@ -24,7 +24,7 @@ export default async function ScoresPage({
 
   if (!board) {
     return (
-      <p className="text-parch">
+      <p className="text-steel">
         Fleaflicker is not answering right now; scores will be back when it is.
       </p>
     );
@@ -37,7 +37,7 @@ export default async function ScoresPage({
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-cream mb-6 scrawl">
+      <h1 className="font-display text-3xl text-ice mb-6 scrawl">
         Scores · {CURRENT_SEASON}
       </h1>
       {weeks.length > 0 && (
@@ -50,8 +50,8 @@ export default async function ScoresPage({
                   aria-current={w === week ? "page" : undefined}
                   className={`block px-3 py-2 rounded border ${
                     w === week
-                      ? "border-amber text-amber"
-                      : "border-edge text-parch hover:text-amber"
+                      ? "border-volt text-volt"
+                      : "border-edge text-steel hover:text-volt"
                   }`}
                 >
                   {w}
@@ -62,9 +62,9 @@ export default async function ScoresPage({
         </nav>
       )}
       <LiveScoreboard initial={board} week={week} />
-      <p className="text-sm text-parch mt-8">
+      <p className="text-sm text-steel mt-8">
         Looking for past seasons? Every scoreboard back to 2007 lives in{" "}
-        <Link href="/seasons" className="text-amber underline underline-offset-4 hover:no-underline">
+        <Link href="/seasons" className="text-volt underline underline-offset-4 hover:no-underline">
           the archive
         </Link>
         .

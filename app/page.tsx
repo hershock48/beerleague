@@ -40,7 +40,7 @@ const TX_LABELS: Record<string, string> = {
 async function NewsSection({ teams }: { teams: { id: number; name: string }[] }) {
   const news = await getNews();
   if (news.length === 0) {
-    return <p className="text-parch">The news wire is quiet.</p>;
+    return <p className="text-steel">The news wire is quiet.</p>;
   }
   return <NewsFeed items={news} teams={teams} />;
 }
@@ -51,19 +51,19 @@ async function TrendingSection() {
   return (
     <section>
       <h2 className="plate mb-3">Waiver Wire Buzz</h2>
-      <p className="text-xs text-parch mb-2">
+      <p className="text-xs text-steel mb-2">
         Most-added players across all fantasy leagues, last 24 hours.
       </p>
       <ol className="panel p-4 space-y-2 text-sm">
         {trending.map((p) => (
           <li key={p.name} className="flex justify-between gap-2">
-            <span className="text-cream">
+            <span className="text-ice">
               {p.name}{" "}
-              <span className="text-parch">
+              <span className="text-steel">
                 {p.position} · {p.nflTeam}
               </span>
             </span>
-            <span className="text-parch">+{p.adds.toLocaleString("en-US")}</span>
+            <span className="text-steel">+{p.adds.toLocaleString("en-US")}</span>
           </li>
         ))}
       </ol>
@@ -84,12 +84,12 @@ async function MovesSection() {
           if (!t?.team?.name || !player) return null;
           return (
             <li key={i}>
-              <span className="text-cream">{t.team.name}</span>{" "}
-              <span className="text-parch">
+              <span className="text-ice">{t.team.name}</span>{" "}
+              <span className="text-steel">
                 {TX_LABELS[t.type ?? ""] ?? "moved"}
               </span>{" "}
-              <span className="text-cream">{player.nameFull}</span>
-              <span className="text-parch">
+              <span className="text-ice">{player.nameFull}</span>
+              <span className="text-steel">
                 {" "}
                 · {player.position} {player.proTeamAbbreviation}
                 {timeAgo(tx.timeEpochMilli) && <> · {timeAgo(tx.timeEpochMilli)}</>}
@@ -138,15 +138,15 @@ export default async function Home() {
       <section>
         <div className="flex items-start justify-between gap-6 mb-6">
           <div>
-            <h1 className="font-display text-3xl sm:text-4xl text-cream mb-1 scrawl">
+            <h1 className="font-display text-3xl sm:text-4xl text-ice mb-1 scrawl">
               The Tap Room
             </h1>
-            <p className="text-parch">
+            <p className="text-steel">
               Season {CURRENT_SEASON}.{" "}
               {lastChampSeason?.champion && (
                 <>
                   Defending champion:{" "}
-                  <span className="text-amber">{lastChampSeason.champion.name}</span>{" "}
+                  <span className="text-volt">{lastChampSeason.champion.name}</span>{" "}
                   ({lastChampSeason.year}).
                 </>
               )}
@@ -158,7 +158,7 @@ export default async function Home() {
         {board ? (
           <LiveScoreboard initial={board} week={week} />
         ) : (
-          <p className="text-parch">
+          <p className="text-steel">
             Fleaflicker is not answering right now. The board will refill when
             it does.
           </p>
@@ -188,14 +188,14 @@ export default async function Home() {
               <div className="panel divide-y divide-edge">
                 {standings.divisions.map((div) => (
                   <div key={div.id} className="p-4">
-                    <h3 className="text-sm text-cream font-semibold mb-2">
+                    <h3 className="text-sm text-ice font-semibold mb-2">
                       {div.name}
                     </h3>
                     <ol className="space-y-1 text-sm">
                       {div.teams.map((t) => (
                         <li key={t.id} className="flex justify-between gap-2">
-                          <span className="text-parch">{t.name}</span>
-                          <span className="text-cream">
+                          <span className="text-steel">{t.name}</span>
+                          <span className="text-ice">
                             {t.recordOverall.formatted}
                           </span>
                         </li>
@@ -205,11 +205,11 @@ export default async function Home() {
                 ))}
               </div>
             ) : (
-              <p className="text-parch text-sm">Standings unavailable.</p>
+              <p className="text-steel text-sm">Standings unavailable.</p>
             )}
             <Link
               href="/standings"
-              className="inline-block mt-2 text-sm text-amber underline underline-offset-4 hover:no-underline"
+              className="inline-block mt-2 text-sm text-volt underline underline-offset-4 hover:no-underline"
             >
               Full standings
             </Link>
@@ -220,39 +220,39 @@ export default async function Home() {
             <ul className="panel p-4 space-y-3 text-sm">
               {derived.records.highWeeks[0] && (
                 <li>
-                  <span className="text-parch">Highest week ever:</span>{" "}
-                  <span className="text-cream">
+                  <span className="text-steel">Highest week ever:</span>{" "}
+                  <span className="text-ice">
                     {derived.records.highWeeks[0].name},{" "}
                     {derived.records.highWeeks[0].pts.toFixed(2)}
                   </span>{" "}
-                  <span className="text-parch">
+                  <span className="text-steel">
                     ({derived.records.highWeeks[0].year})
                   </span>
                 </li>
               )}
               {derived.records.nailBiters[0] && (
                 <li>
-                  <span className="text-parch">Closest game:</span>{" "}
-                  <span className="text-cream">
+                  <span className="text-steel">Closest game:</span>{" "}
+                  <span className="text-ice">
                     {Math.abs(
                       derived.records.nailBiters[0].away.pts -
                         derived.records.nailBiters[0].home.pts,
                     ).toFixed(2)}{" "}
                     points
                   </span>{" "}
-                  <span className="text-parch">
+                  <span className="text-steel">
                     ({derived.records.nailBiters[0].year})
                   </span>
                 </li>
               )}
               {derived.records.playerHighs[0] && (
                 <li>
-                  <span className="text-parch">Best game ever started:</span>{" "}
-                  <span className="text-cream">
+                  <span className="text-steel">Best game ever started:</span>{" "}
+                  <span className="text-ice">
                     {derived.records.playerHighs[0].player},{" "}
                     {derived.records.playerHighs[0].pts.toFixed(2)}
                   </span>{" "}
-                  <span className="text-parch">
+                  <span className="text-steel">
                     ({derived.records.playerHighs[0].year})
                   </span>
                 </li>
@@ -260,7 +260,7 @@ export default async function Home() {
             </ul>
             <Link
               href="/records"
-              className="inline-block mt-2 text-sm text-amber underline underline-offset-4 hover:no-underline"
+              className="inline-block mt-2 text-sm text-volt underline underline-offset-4 hover:no-underline"
             >
               The whole record book
             </Link>

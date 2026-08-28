@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport = {
-  themeColor: "#14100a",
+  themeColor: "#0b0e13",
 };
 
 export default function RootLayout({
@@ -53,17 +53,18 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-amber focus:text-ground focus:px-4 focus:py-2 focus:rounded"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-volt focus:text-ground focus:px-4 focus:py-2 focus:rounded"
         >
           Skip to content
         </a>
         <header className="border-b border-edge bg-surface/80">
           <div className="mx-auto max-w-6xl px-4">
             <div className="flex items-baseline justify-between gap-4 pt-5 pb-1">
-              <Link href="/" className="font-display text-amber glow text-2xl sm:text-3xl leading-none">
+              {/* The sign over the door: pink neon, like every good beer sign */}
+              <Link href="/" className="font-display text-pink glow-pink text-2xl sm:text-3xl leading-none">
                 {LEAGUE_NAME}
               </Link>
-              <span className="plate hidden sm:block text-parch!">
+              <span className="plate hidden sm:block text-steel!">
                 est. {FIRST_SEASON}
               </span>
             </div>
@@ -79,7 +80,7 @@ export default function RootLayout({
         <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">{children}</main>
 
         <footer className="border-t border-edge mt-16">
-          <div className="mx-auto max-w-6xl px-4 py-8 text-sm text-parch flex flex-wrap gap-x-8 gap-y-2 items-center justify-between">
+          <div className="mx-auto max-w-6xl px-4 py-8 text-sm text-steel flex flex-wrap gap-x-8 gap-y-2 items-center justify-between">
             <p>
               {LEAGUE_NAME}, pouring since {FIRST_SEASON}.
             </p>
@@ -87,7 +88,7 @@ export default function RootLayout({
               Rosters and lineups still live on{" "}
               <a
                 href={FLEAFLICKER_URL}
-                className="text-amber underline underline-offset-4 hover:no-underline"
+                className="text-volt underline underline-offset-4 hover:no-underline"
               >
                 Fleaflicker
               </a>

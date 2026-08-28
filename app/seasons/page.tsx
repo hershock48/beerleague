@@ -14,8 +14,8 @@ export default async function SeasonsPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-cream mb-2 scrawl">The Back Room</h1>
-      <p className="text-parch mb-8 max-w-2xl">
+      <h1 className="font-display text-3xl text-ice mb-2 scrawl">The Back Room</h1>
+      <p className="text-steel mb-8 max-w-2xl">
         {done.length} completed seasons on the wall. {CANDY_ERA_NOTE}
       </p>
       <ol className="space-y-3">
@@ -23,31 +23,31 @@ export default async function SeasonsPage() {
           <li key={s.year}>
             <Link
               href={`/seasons/${s.year}`}
-              className="panel flex flex-wrap items-baseline gap-x-6 gap-y-1 p-4 hover:border-amber transition-colors"
+              className="panel flex flex-wrap items-baseline gap-x-6 gap-y-1 p-4 hover:border-volt transition-colors"
             >
-              <span className="font-display text-xl text-amber w-16">
+              <span className="font-display text-xl text-volt w-16">
                 {s.year}
               </span>
               {s.isCurrent ? (
-                <span className="text-parch">In progress</span>
+                <span className="text-steel">In progress</span>
               ) : s.champion ? (
                 <>
-                  <span className="text-cream">
+                  <span className="text-ice">
                     🏆 {s.champion.name}
                     {s.champion.owner && (
-                      <span className="text-parch"> · {s.champion.owner}</span>
+                      <span className="text-steel"> · {s.champion.owner}</span>
                     )}
                   </span>
                   {s.runnerUp && (
-                    <span className="text-parch text-sm">
+                    <span className="text-steel text-sm">
                       over {s.runnerUp.name}
                     </span>
                   )}
                 </>
               ) : (
-                <span className="text-parch">Season complete</span>
+                <span className="text-steel">Season complete</span>
               )}
-              <span className="text-parch text-sm ml-auto">
+              <span className="text-steel text-sm ml-auto">
                 {s.teamCount} teams
               </span>
             </Link>

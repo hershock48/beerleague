@@ -26,23 +26,23 @@ export default function YourStool({ teams }: { teams: StoolTeam[] }) {
     <div className="panel px-4 py-3 mb-6 min-h-14 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
       {mine ? (
         <>
-          <span className="marker text-amber">Your stool:</span>
+          <span className="marker text-volt">Your stool:</span>
           <Link
             href={`/franchises/${mine.slug}`}
-            className="text-cream font-semibold hover:text-amber"
+            className="text-ice font-semibold hover:text-volt"
           >
             {mine.name}
           </Link>
-          <span className="text-parch">
+          <span className="text-steel">
             {mine.record} all time
             {mine.titles > 0 && (
-              <span className="text-amber"> {"🏆".repeat(mine.titles)}</span>
+              <span className="text-volt"> {"🏆".repeat(mine.titles)}</span>
             )}
           </span>
           {mine.gameId && (
             <Link
               href={`/seasons/${CURRENT_SEASON}/games/${mine.gameId}`}
-              className="text-amber underline underline-offset-4 hover:no-underline"
+              className="text-volt underline underline-offset-4 hover:no-underline"
             >
               This week&apos;s matchup
             </Link>
@@ -50,21 +50,21 @@ export default function YourStool({ teams }: { teams: StoolTeam[] }) {
           <button
             type="button"
             onClick={() => writeMyTeam(0)}
-            className="ml-auto text-parch hover:text-amber text-xs px-2 py-2"
+            className="ml-auto text-steel hover:text-volt text-xs px-2 py-2"
           >
             not you?
           </button>
         </>
       ) : (
         <>
-          <label htmlFor="stool-pick" className="marker text-amber">
+          <label htmlFor="stool-pick" className="marker text-volt">
             Claim your stool:
           </label>
           <select
             id="stool-pick"
             value={0}
             onChange={(e) => writeMyTeam(Number(e.target.value))}
-            className="bg-panel border border-edge rounded px-3 py-2 text-cream"
+            className="bg-panel border border-edge rounded px-3 py-2 text-ice"
           >
             <option value={0}>Whose team are you?</option>
             {teams.map((t) => (
@@ -73,7 +73,7 @@ export default function YourStool({ teams }: { teams: StoolTeam[] }) {
               </option>
             ))}
           </select>
-          <span className="text-parch text-xs">
+          <span className="text-steel text-xs">
             Lights up your matchup and pours your news. Remembered on this
             device.
           </span>

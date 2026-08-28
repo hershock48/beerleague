@@ -29,22 +29,22 @@ export default async function FranchisesPage() {
   const Card = ({ f }: { f: (typeof all)[number] }) => (
     <Link
       href={`/franchises/${f.slug}`}
-      className="panel block p-4 hover:border-amber transition-colors"
+      className="panel block p-4 hover:border-volt transition-colors"
     >
-      <p className="text-cream font-semibold">
+      <p className="text-ice font-semibold">
         {f.currentName}
         {f.championships.length > 0 && (
-          <span className="text-amber"> {"🏆".repeat(f.championships.length)}</span>
+          <span className="text-volt"> {"🏆".repeat(f.championships.length)}</span>
         )}
       </p>
-      <p className="text-sm text-parch mt-1">
+      <p className="text-sm text-steel mt-1">
         {f.career.w}-{f.career.l}
         {f.career.t > 0 && `-${f.career.t}`} all time ·{" "}
         {pct(f.career.w, f.career.l, f.career.t)} · {f.seasons.length}{" "}
         {f.seasons.length === 1 ? "season" : "seasons"}
       </p>
       {Object.keys(f.names).length > 1 && (
-        <p className="text-xs text-parch mt-2">
+        <p className="text-xs text-steel mt-2">
           Also poured as: {Object.keys(f.names).filter((n) => n !== f.currentName).join(", ")}
         </p>
       )}
@@ -53,7 +53,7 @@ export default async function FranchisesPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-cream mb-8 scrawl">Franchises</h1>
+      <h1 className="font-display text-3xl text-ice mb-8 scrawl">Franchises</h1>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {active.map((f) => (
           <Card key={f.id} f={f} />

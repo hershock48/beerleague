@@ -55,17 +55,17 @@ export default async function FranchisePage({
   return (
     <div>
       <p className="text-sm mb-2">
-        <Link href="/franchises" className="text-amber underline underline-offset-4 hover:no-underline">
+        <Link href="/franchises" className="text-volt underline underline-offset-4 hover:no-underline">
           ← All franchises
         </Link>
       </p>
-      <h1 className="font-display text-3xl text-cream mb-1">
+      <h1 className="font-display text-3xl text-ice mb-1">
         {f.currentName}
         {f.championships.length > 0 && (
-          <span className="text-amber glow"> {"🏆".repeat(f.championships.length)}</span>
+          <span className="text-volt glow"> {"🏆".repeat(f.championships.length)}</span>
         )}
       </h1>
-      <p className="text-parch mb-8">
+      <p className="text-steel mb-8">
         {owners.length > 0 && <>Run by {owners.join(", ")} · </>}
         In the league since {f.seasons[0].year}
         {!f.active && <> · last poured {f.lastSeason}</>}
@@ -74,16 +74,16 @@ export default async function FranchisePage({
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-10">
         <div className="panel p-4">
           <p className="plate">All-time record</p>
-          <p className="text-2xl text-cream mt-1">
+          <p className="text-2xl text-ice mt-1">
             {f.career.w}-{f.career.l}
             {f.career.t > 0 && `-${f.career.t}`}
           </p>
-          <p className="text-sm text-parch">{pct(f.career.w, f.career.l, f.career.t)}</p>
+          <p className="text-sm text-steel">{pct(f.career.w, f.career.l, f.career.t)}</p>
         </div>
         <div className="panel p-4">
           <p className="plate">Championships</p>
-          <p className="text-2xl text-cream mt-1">{f.championships.length}</p>
-          <p className={`text-sm marker ${f.championships.length > 0 ? "text-amber" : "text-parch"}`}>
+          <p className="text-2xl text-ice mt-1">{f.championships.length}</p>
+          <p className={`text-sm marker ${f.championships.length > 0 ? "text-volt" : "text-steel"}`}>
             {f.championships.length > 0
               ? f.championships.map((y) => `'${String(y).slice(2)}`).join("  ")
               : "still thirsty"}
@@ -91,17 +91,17 @@ export default async function FranchisePage({
         </div>
         <div className="panel p-4">
           <p className="plate">Playoff runs</p>
-          <p className="text-2xl text-cream mt-1">{f.playoffApps}</p>
-          <p className="text-sm text-parch">
+          <p className="text-2xl text-ice mt-1">{f.playoffApps}</p>
+          <p className="text-sm text-steel">
             {f.runnerUps.length > 0 && <>runner-up {f.runnerUps.join(", ")}</>}
           </p>
         </div>
         <div className="panel p-4">
           <p className="plate">Points all time</p>
-          <p className="text-2xl text-cream mt-1">
+          <p className="text-2xl text-ice mt-1">
             {Math.round(f.career.pf).toLocaleString("en-US")}
           </p>
-          <p className="text-sm text-parch">
+          <p className="text-sm text-steel">
             against {Math.round(f.career.pa).toLocaleString("en-US")}
           </p>
         </div>
@@ -116,7 +116,7 @@ export default async function FranchisePage({
           <div className="panel overflow-x-auto" tabIndex={0} role="region" aria-label="Season by season">
             <table className="w-full text-sm">
               <thead>
-                <tr className="text-left text-parch border-b border-edge">
+                <tr className="text-left text-steel border-b border-edge">
                   <th className="px-4 py-2 font-normal">Year</th>
                   <th className="px-4 py-2 font-normal">Name</th>
                   <th className="px-4 py-2 font-normal">Record</th>
@@ -128,22 +128,22 @@ export default async function FranchisePage({
                 {[...f.seasons].reverse().map((s) => (
                   <tr key={s.year} className="border-b border-edge last:border-0">
                     <td className="px-4 py-2">
-                      <Link href={`/seasons/${s.year}`} className="text-amber underline underline-offset-4 hover:no-underline">
+                      <Link href={`/seasons/${s.year}`} className="text-volt underline underline-offset-4 hover:no-underline">
                         {s.year}
                       </Link>
                     </td>
-                    <td className="px-4 py-2 text-cream">{s.name}</td>
-                    <td className="px-4 py-2 text-cream">{s.record}</td>
-                    <td className="px-4 py-2 text-right text-cream">{s.pf}</td>
+                    <td className="px-4 py-2 text-ice">{s.name}</td>
+                    <td className="px-4 py-2 text-ice">{s.record}</td>
+                    <td className="px-4 py-2 text-right text-ice">{s.pf}</td>
                     <td className="px-4 py-2">
                       {s.finish === "champion" ? (
-                        <span className="text-amber">Champion</span>
+                        <span className="text-volt">Champion</span>
                       ) : s.finish === "runner-up" ? (
-                        <span className="text-cream">Runner-up</span>
+                        <span className="text-ice">Runner-up</span>
                       ) : s.finish === "playoffs" ? (
-                        <span className="text-parch">Playoffs</span>
+                        <span className="text-steel">Playoffs</span>
                       ) : (
-                        <span className="text-parch">–</span>
+                        <span className="text-steel">–</span>
                       )}
                     </td>
                   </tr>
@@ -159,7 +159,7 @@ export default async function FranchisePage({
             <div className="panel overflow-x-auto" tabIndex={0} role="region" aria-label="Head to head">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="text-left text-parch border-b border-edge">
+                  <tr className="text-left text-steel border-b border-edge">
                     <th className="px-4 py-2 font-normal">Against</th>
                     <th className="px-4 py-2 font-normal">Record</th>
                     <th className="px-4 py-2 font-normal text-right">PF</th>
@@ -172,17 +172,17 @@ export default async function FranchisePage({
                       <td className="px-4 py-2">
                         <Link
                           href={`/franchises/${r.other.slug}`}
-                          className="text-cream hover:text-amber"
+                          className="text-ice hover:text-volt"
                         >
                           {r.other.currentName}
                         </Link>
                       </td>
-                      <td className={`px-4 py-2 ${r.w > r.l ? "text-win" : r.w < r.l ? "text-loss" : "text-parch"}`}>
+                      <td className={`px-4 py-2 ${r.w > r.l ? "text-win" : r.w < r.l ? "text-loss" : "text-steel"}`}>
                         {r.w}-{r.l}
                         {r.t > 0 && `-${r.t}`}
                       </td>
-                      <td className="px-4 py-2 text-right text-cream">{Math.round(r.pf)}</td>
-                      <td className="px-4 py-2 text-right text-parch">{Math.round(r.pa)}</td>
+                      <td className="px-4 py-2 text-right text-ice">{Math.round(r.pf)}</td>
+                      <td className="px-4 py-2 text-right text-steel">{Math.round(r.pa)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -196,17 +196,17 @@ export default async function FranchisePage({
               <ul className="panel p-4 space-y-2 text-sm">
                 {bestWeeks.slice(0, 5).map((w, i) => (
                   <li key={i} className="flex justify-between gap-3">
-                    <span className="text-parch">
-                      <Link href={`/seasons/${w.year}`} className="text-amber underline underline-offset-4 hover:no-underline">
+                    <span className="text-steel">
+                      <Link href={`/seasons/${w.year}`} className="text-volt underline underline-offset-4 hover:no-underline">
                         {w.year}
                       </Link>{" "}
                       week {w.week} vs {w.vs}
                     </span>
-                    <span className="text-cream">{w.pts.toFixed(2)}</span>
+                    <span className="text-ice">{w.pts.toFixed(2)}</span>
                   </li>
                 ))}
               </ul>
-              <p className="text-xs text-parch mt-2">
+              <p className="text-xs text-steel mt-2">
                 Weeks that made the league's all-time top list.
               </p>
             </section>

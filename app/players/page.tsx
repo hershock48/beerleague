@@ -17,10 +17,10 @@ export default async function PlayersPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-cream mb-2 scrawl">
+      <h1 className="font-display text-3xl text-ice mb-2 scrawl">
         The Roster Wall
       </h1>
-      <p className="text-parch mb-8 max-w-2xl">
+      <p className="text-steel mb-8 max-w-2xl">
         {scored.toLocaleString("en-US")} players have scored a point in this
         league since {FIRST_SEASON}. Every one of them has a card on the wall.
       </p>

@@ -61,15 +61,15 @@ export default async function SeasonPage({
   return (
     <div>
       <div className="flex items-baseline justify-between mb-6 gap-4">
-        <h1 className="font-display text-3xl text-cream">{year}</h1>
+        <h1 className="font-display text-3xl text-ice">{year}</h1>
         <p className="text-sm flex gap-4">
           {older && (
-            <Link href={`/seasons/${older}`} className="text-amber underline underline-offset-4 hover:no-underline">
+            <Link href={`/seasons/${older}`} className="text-volt underline underline-offset-4 hover:no-underline">
               ← {older}
             </Link>
           )}
           {newer && (
-            <Link href={`/seasons/${newer}`} className="text-amber underline underline-offset-4 hover:no-underline">
+            <Link href={`/seasons/${newer}`} className="text-volt underline underline-offset-4 hover:no-underline">
               {newer} →
             </Link>
           )}
@@ -77,12 +77,12 @@ export default async function SeasonPage({
       </div>
 
       {season.champion && (
-        <div className="panel border-amber/40 p-5 mb-8">
+        <div className="panel border-volt/40 p-5 mb-8">
           <p className="plate mb-1">League Champion</p>
-          <p className="font-display text-2xl text-amber glow">
+          <p className="font-display text-2xl text-volt glow">
             {season.champion.name}
           </p>
-          <p className="text-parch text-sm mt-1">
+          <p className="text-steel text-sm mt-1">
             {season.champion.owner && <>{season.champion.owner} · </>}
             {season.champion.record} regular season
             {season.runnerUp && <> · beat {season.runnerUp.name} in the final</>}
@@ -90,9 +90,9 @@ export default async function SeasonPage({
         </div>
       )}
       {season.isCurrent && (
-        <p className="text-parch mb-8">
+        <p className="text-steel mb-8">
           Season in progress. The board fills in as games finish; live scores
-          are in <Link href="/scores" className="text-amber underline underline-offset-4 hover:no-underline">Scores</Link>.
+          are in <Link href="/scores" className="text-volt underline underline-offset-4 hover:no-underline">Scores</Link>.
         </p>
       )}
 
@@ -104,11 +104,11 @@ export default async function SeasonPage({
             {season.standings.map((div) => (
               <div key={div.name} className="panel overflow-x-auto" tabIndex={0} role="region" aria-label={`${div.name} final standings`}>
                 <table className="w-full text-sm">
-                  <caption className="text-left text-cream font-semibold px-4 pt-3 pb-1">
+                  <caption className="text-left text-ice font-semibold px-4 pt-3 pb-1">
                     {div.name}
                   </caption>
                   <thead>
-                    <tr className="text-left text-parch border-b border-edge">
+                    <tr className="text-left text-steel border-b border-edge">
                       <th className="px-4 py-2 font-normal">Team</th>
                       <th className="px-4 py-2 font-normal">Record</th>
                       <th className="px-4 py-2 font-normal text-right">PF</th>
@@ -121,18 +121,18 @@ export default async function SeasonPage({
                         <td className="px-4 py-2">
                           <Link
                             href={`/franchises/${slugOf.get(t.id) ?? ""}`}
-                            className="text-cream hover:text-amber"
+                            className="text-ice hover:text-volt"
                           >
                             {t.isChampion && "🏆 "}
                             {t.name}
                           </Link>
                           {t.owner && (
-                            <span className="text-parch"> · {t.owner}</span>
+                            <span className="text-steel"> · {t.owner}</span>
                           )}
                         </td>
-                        <td className="px-4 py-2 text-cream">{t.record}</td>
-                        <td className="px-4 py-2 text-right text-cream">{t.pf}</td>
-                        <td className="px-4 py-2 text-right text-parch">{t.pa}</td>
+                        <td className="px-4 py-2 text-ice">{t.record}</td>
+                        <td className="px-4 py-2 text-right text-ice">{t.pf}</td>
+                        <td className="px-4 py-2 text-right text-steel">{t.pa}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -148,11 +148,11 @@ export default async function SeasonPage({
             <div className="space-y-4">
               {playoffWeeks.map((wk, i) => (
                 <div key={wk} className="panel p-4">
-                  <p className="text-sm text-cream font-semibold mb-2">
+                  <p className="text-sm text-ice font-semibold mb-2">
                     {i === playoffWeeks.length - 1
                       ? "Championship week"
                       : `Round ${i + 1}`}
-                    <span className="text-parch font-normal"> · week {wk}</span>
+                    <span className="text-steel font-normal"> · week {wk}</span>
                   </p>
                   <ul className="space-y-2 text-sm">
                     {season.playoffGames
@@ -161,11 +161,11 @@ export default async function SeasonPage({
                         const awayWon = g.away.pts > g.home.pts;
                         return (
                           <li key={gi} className="flex flex-wrap gap-x-2">
-                            <span className={awayWon ? "text-cream font-semibold" : "text-parch"}>
+                            <span className={awayWon ? "text-ice font-semibold" : "text-steel"}>
                               {g.away.name} {g.away.pts.toFixed(2)}
                             </span>
-                            <span className="text-parch">at</span>
-                            <span className={awayWon ? "text-parch" : "text-cream font-semibold"}>
+                            <span className="text-steel">at</span>
+                            <span className={awayWon ? "text-steel" : "text-ice font-semibold"}>
                               {g.home.name} {g.home.pts.toFixed(2)}
                             </span>
                           </li>
@@ -175,7 +175,7 @@ export default async function SeasonPage({
                 </div>
               ))}
             </div>
-            <p className="text-xs text-parch mt-3">
+            <p className="text-xs text-steel mt-3">
               Playoff weeks include consolation games; the title game is the one
               between the two teams that finished first and second.
             </p>
@@ -189,10 +189,10 @@ export default async function SeasonPage({
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {weeks.map((wk) => (
               <div key={wk} className="panel p-4 min-w-0">
-                <p className="text-sm text-cream font-semibold mb-2">
+                <p className="text-sm text-ice font-semibold mb-2">
                   Week {wk}
                   {wk > season.regularWeeks && (
-                    <span className="text-amber font-normal"> · playoffs</span>
+                    <span className="text-volt font-normal"> · playoffs</span>
                   )}
                 </p>
                 <ul className="space-y-1.5 text-sm">
@@ -204,14 +204,14 @@ export default async function SeasonPage({
                         <li key={g.id}>
                           <Link
                             href={`/seasons/${year}/games/${g.id}`}
-                            className="flex justify-between gap-2 hover:text-amber text-parch"
+                            className="flex justify-between gap-2 hover:text-volt text-steel"
                           >
                             <span className="truncate">
-                              <span className={awayWon ? "text-cream" : undefined}>
+                              <span className={awayWon ? "text-ice" : undefined}>
                                 {g.away.name}
                               </span>{" "}
                               at{" "}
-                              <span className={awayWon ? undefined : "text-cream"}>
+                              <span className={awayWon ? undefined : "text-ice"}>
                                 {g.home.name}
                               </span>
                             </span>
@@ -226,7 +226,7 @@ export default async function SeasonPage({
               </div>
             ))}
           </div>
-          <p className="text-xs text-parch mt-3">
+          <p className="text-xs text-steel mt-3">
             Every score links to the full box score, lineups and all.
           </p>
         </section>
@@ -238,7 +238,7 @@ export default async function SeasonPage({
           {/* Fleaflicker's early records are spotty: 2012 survives as one
               round of ten picks. Present partial data as partial. */}
           {draft.length < season.teamCount * 3 && (
-            <p className="text-sm text-parch mb-3">
+            <p className="text-sm text-steel mb-3">
               Only part of this draft survives in Fleaflicker&apos;s records;
               this is everything it still has.
             </p>
@@ -248,7 +248,7 @@ export default async function SeasonPage({
           <div className="space-y-2">
             {rounds.map((round) => (
               <details key={round} className="panel" open={round === 1}>
-                <summary className="cursor-pointer px-4 py-3 text-cream text-sm font-semibold">
+                <summary className="cursor-pointer px-4 py-3 text-ice text-sm font-semibold">
                   Round {round}
                 </summary>
                 <ol className="px-4 pb-4 grid gap-x-8 gap-y-1 sm:grid-cols-2 text-sm">
@@ -256,11 +256,11 @@ export default async function SeasonPage({
                     .filter((p) => p.round === round)
                     .map((p, i) => (
                       <li key={i} className="flex justify-between gap-3">
-                        <span className="text-cream truncate">
+                        <span className="text-ice truncate">
                           {p.player}{" "}
-                          <span className="text-parch text-xs">{p.pos}</span>
+                          <span className="text-steel text-xs">{p.pos}</span>
                         </span>
-                        <span className="text-parch truncate">{p.team}</span>
+                        <span className="text-steel truncate">{p.team}</span>
                       </li>
                     ))}
                 </ol>

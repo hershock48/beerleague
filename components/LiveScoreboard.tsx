@@ -25,13 +25,13 @@ function Side({
   const left = score?.yetToPlay ?? 0;
   return (
     <div className="flex items-baseline justify-between gap-3">
-      <span className={winning ? "text-cream font-semibold" : "text-parch"}>
+      <span className={winning ? "text-ice font-semibold" : "text-steel"}>
         {name}
         {started && left > 0 && (
-          <span className="text-xs text-parch font-normal"> · {left} left</span>
+          <span className="text-xs text-steel font-normal"> · {left} left</span>
         )}
       </span>
-      <span className={`text-lg ${winning ? "text-amber font-bold" : "text-parch"}`}>
+      <span className={`text-lg ${winning ? "text-volt font-bold" : "text-steel"}`}>
         {pts ?? "–"}
       </span>
     </div>
@@ -49,8 +49,8 @@ function GameCard({ game, mine }: { game: LiveGame; mine: boolean }) {
   return (
     <Link
       href={`/seasons/${CURRENT_SEASON}/games/${game.id}`}
-      className={`panel p-4 flex flex-col gap-2 transition-colors hover:border-amber ${
-        mine ? "border-amber/70 shadow-[0_0_18px_rgb(232_163_61/0.15)]" : ""
+      className={`panel p-4 flex flex-col gap-2 transition-colors hover:border-volt ${
+        mine ? "border-volt/70 shadow-[0_0_18px_rgb(198_245_63/0.18)]" : ""
       }`}
     >
       <Side
@@ -65,10 +65,10 @@ function GameCard({ game, mine }: { game: LiveGame; mine: boolean }) {
         winning={started && hv > av}
         started={started}
       />
-      <p className="text-xs text-parch pt-1 border-t border-edge flex justify-between">
+      <p className="text-xs text-steel pt-1 border-t border-edge flex justify-between">
         <span>
           {mine ? (
-            <span className="text-amber marker">Your matchup</span>
+            <span className="text-volt marker">Your matchup</span>
           ) : game.isDivisional ? (
             "Division game"
           ) : (
@@ -117,7 +117,7 @@ export default function LiveScoreboard({
   const myTeam = useMyTeam();
   const games = board.games ?? [];
   if (games.length === 0) {
-    return <p className="text-parch">No matchups on the board yet.</p>;
+    return <p className="text-steel">No matchups on the board yet.</p>;
   }
   // Highlight rather than reorder: a card that jumps position after
   // hydration reads as the page glitching.

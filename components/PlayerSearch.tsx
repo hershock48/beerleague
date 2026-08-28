@@ -25,11 +25,11 @@ export default function PlayerSearch({ rows }: { rows: PlayerIndexRow[] }) {
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Who you looking for, coach?"
-          className="w-full max-w-md bg-panel border border-edge rounded px-4 py-3 text-cream placeholder:text-parch"
+          className="w-full max-w-md bg-panel border border-edge rounded px-4 py-3 text-ice placeholder:text-steel"
         />
       </div>
       {shown.length === 0 ? (
-        <p className="text-parch">
+        <p className="text-steel">
           Nobody by that name has ever scored a point in this league.
         </p>
       ) : (
@@ -41,7 +41,7 @@ export default function PlayerSearch({ rows }: { rows: PlayerIndexRow[] }) {
         >
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-left text-parch border-b border-edge">
+              <tr className="text-left text-steel border-b border-edge">
                 <th className="px-4 py-3 font-normal">#</th>
                 <th className="px-4 py-3 font-normal">Player</th>
                 <th className="px-4 py-3 font-normal">Pos</th>
@@ -52,20 +52,20 @@ export default function PlayerSearch({ rows }: { rows: PlayerIndexRow[] }) {
             <tbody>
               {shown.map((r) => (
                 <tr key={r.slug} className="border-b border-edge last:border-0">
-                  <td className="px-4 py-2 text-parch">{r.rank}</td>
+                  <td className="px-4 py-2 text-steel">{r.rank}</td>
                   <td className="px-4 py-2">
                     <Link
                       href={`/players/${r.slug}`}
-                      className="text-cream hover:text-amber"
+                      className="text-ice hover:text-volt"
                     >
                       {r.name}
                     </Link>
                   </td>
-                  <td className="px-4 py-2 text-parch">{r.pos}</td>
-                  <td className="px-4 py-2 text-right text-amber">
+                  <td className="px-4 py-2 text-steel">{r.pos}</td>
+                  <td className="px-4 py-2 text-right text-volt">
                     {r.pts.toFixed(2)}
                   </td>
-                  <td className="px-4 py-2 text-right text-parch">{r.games}</td>
+                  <td className="px-4 py-2 text-right text-steel">{r.games}</td>
                 </tr>
               ))}
             </tbody>
@@ -73,7 +73,7 @@ export default function PlayerSearch({ rows }: { rows: PlayerIndexRow[] }) {
         </div>
       )}
       {!query && (
-        <p className="text-xs text-parch mt-3">
+        <p className="text-xs text-steel mt-3">
           The all-time top 50 by points scored as a starter. Search finds
           anyone who ever suited up.
         </p>

@@ -26,14 +26,14 @@ export default function NewsFeed({
     <div>
       <div className="mb-4">
         <div className="flex flex-wrap items-center gap-3">
-          <label htmlFor="team-pick" className="text-sm text-parch">
+          <label htmlFor="team-pick" className="text-sm text-steel">
             Pour the news for
           </label>
           <select
             id="team-pick"
             value={teamId}
             onChange={(e) => pick(Number(e.target.value))}
-            className="bg-panel border border-edge rounded px-3 py-2 text-cream text-sm"
+            className="bg-panel border border-edge rounded px-3 py-2 text-ice text-sm"
           >
             <option value={0}>The whole bar</option>
             {teams.map((t) => (
@@ -44,14 +44,14 @@ export default function NewsFeed({
           </select>
         </div>
         {teamId !== 0 && (
-          <p className="text-xs text-parch mt-2">
+          <p className="text-xs text-steel mt-2">
             Your matchup lights up on the board above, too.
           </p>
         )}
       </div>
 
       {shown.length === 0 ? (
-        <p className="text-parch">
+        <p className="text-steel">
           Quiet night. Nothing in the wire about this roster right now; switch
           to the whole bar for the full feed.
         </p>
@@ -68,15 +68,15 @@ export default function NewsFeed({
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-cream font-semibold hover:text-amber transition-colors"
+                  className="text-ice font-semibold hover:text-volt transition-colors"
                 >
                   {item.headline}
                 </a>
-                <p className="text-sm text-parch mt-1 line-clamp-3">
+                <p className="text-sm text-steel mt-1 line-clamp-3">
                   {item.description}
                 </p>
                 {why && (
-                  <p className="text-xs text-amber mt-2 marker">On your card: {why}</p>
+                  <p className="text-xs text-volt mt-2 marker">On your card: {why}</p>
                 )}
               </li>
             );

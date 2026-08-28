@@ -53,7 +53,7 @@ export default async function PlayerPage({
       <p className="text-sm mb-4">
         <Link
           href="/players"
-          className="text-amber underline underline-offset-4 hover:no-underline"
+          className="text-volt underline underline-offset-4 hover:no-underline"
         >
           ← The roster wall
         </Link>
@@ -67,14 +67,14 @@ export default async function PlayerPage({
         >
           {isDefense ? "X" : "O"}
         </span>
-        <h1 className="font-display text-3xl text-cream scrawl">{p.name}</h1>
+        <h1 className="font-display text-3xl text-ice scrawl">{p.name}</h1>
       </div>
-      <p className="text-parch mb-8">
+      <p className="text-steel mb-8">
         {p.pos}
         {rank && (
           <>
             {" "}
-            · <span className="text-amber">no. {rank}</span> all-time scorer
+            · <span className="text-volt">no. {rank}</span> all-time scorer
           </>
         )}{" "}
         · {seasonsPlayed} {seasonsPlayed === 1 ? "season" : "seasons"} in the
@@ -84,13 +84,13 @@ export default async function PlayerPage({
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-10">
         <div className="panel p-4">
           <p className="plate">Career points</p>
-          <p className="text-2xl text-cream mt-1">{p.startedPts.toFixed(2)}</p>
-          <p className="text-sm text-parch">as a starter</p>
+          <p className="text-2xl text-ice mt-1">{p.startedPts.toFixed(2)}</p>
+          <p className="text-sm text-steel">as a starter</p>
         </div>
         <div className="panel p-4">
           <p className="plate">Starts</p>
-          <p className="text-2xl text-cream mt-1">{p.startedGames}</p>
-          <p className="text-sm text-parch">
+          <p className="text-2xl text-ice mt-1">{p.startedGames}</p>
+          <p className="text-sm text-steel">
             {p.startedGames > 0
               ? `${(p.startedPts / p.startedGames).toFixed(2)} a game`
               : "never started"}
@@ -98,19 +98,19 @@ export default async function PlayerPage({
         </div>
         <div className="panel p-4">
           <p className="plate">Best night</p>
-          <p className="text-2xl text-cream mt-1">
+          <p className="text-2xl text-ice mt-1">
             {p.topGames[0] ? p.topGames[0].pts.toFixed(2) : "–"}
           </p>
           {p.topGames[0] && (
-            <p className="text-sm text-parch">
+            <p className="text-sm text-steel">
               {p.topGames[0].year} week {p.topGames[0].week}
             </p>
           )}
         </div>
         <div className="panel p-4">
           <p className="plate">Benched</p>
-          <p className="text-2xl text-cream mt-1">{p.benchGames}</p>
-          <p className="text-sm text-parch">
+          <p className="text-2xl text-ice mt-1">{p.benchGames}</p>
+          <p className="text-sm text-steel">
             weeks · {p.benchPts.toFixed(2)} pts wasted
           </p>
         </div>
@@ -127,7 +127,7 @@ export default async function PlayerPage({
           >
             <table className="w-full text-sm">
               <thead>
-                <tr className="text-left text-parch border-b border-edge">
+                <tr className="text-left text-steel border-b border-edge">
                   <th className="px-4 py-2 font-normal">Year</th>
                   <th className="px-4 py-2 font-normal">Team</th>
                   <th className="px-4 py-2 font-normal text-right">Starts</th>
@@ -141,7 +141,7 @@ export default async function PlayerPage({
                     <td className="px-4 py-2">
                       <Link
                         href={`/seasons/${s.year}`}
-                        className="text-amber underline underline-offset-4 hover:no-underline"
+                        className="text-volt underline underline-offset-4 hover:no-underline"
                       >
                         {s.year}
                       </Link>
@@ -149,18 +149,18 @@ export default async function PlayerPage({
                     <td className="px-4 py-2">
                       <Link
                         href={`/franchises/${franchiseSlug.get(s.teamId) ?? ""}`}
-                        className="text-cream hover:text-amber"
+                        className="text-ice hover:text-volt"
                       >
                         {s.team}
                       </Link>
                     </td>
-                    <td className="px-4 py-2 text-right text-cream">
+                    <td className="px-4 py-2 text-right text-ice">
                       {s.startedGames}
                     </td>
-                    <td className="px-4 py-2 text-right text-cream">
+                    <td className="px-4 py-2 text-right text-ice">
                       {s.startedPts.toFixed(2)}
                     </td>
-                    <td className="px-4 py-2 text-right text-parch">
+                    <td className="px-4 py-2 text-right text-steel">
                       {s.benchGames}
                     </td>
                   </tr>
@@ -176,11 +176,11 @@ export default async function PlayerPage({
             <ol className="panel p-4 space-y-2 text-sm taped tilt-r mt-3">
               {p.topGames.map((g, i) => (
                 <li key={i} className="flex justify-between gap-3">
-                  <span className="text-parch">
+                  <span className="text-steel">
                     <span>{i + 1}.</span> for {g.team},{" "}
                     <Link
                       href={`/seasons/${g.year}/games/${g.gameId}`}
-                      className="text-amber underline underline-offset-4 hover:no-underline"
+                      className="text-volt underline underline-offset-4 hover:no-underline"
                     >
                       {g.year} wk {g.week}
                     </Link>
@@ -188,13 +188,13 @@ export default async function PlayerPage({
                       <span className="marker text-loss"> (on the bench!)</span>
                     )}
                   </span>
-                  <span className="text-amber font-semibold">
+                  <span className="text-volt font-semibold">
                     {g.pts.toFixed(2)}
                   </span>
                 </li>
               ))}
             </ol>
-            <p className="text-xs text-parch mt-3">
+            <p className="text-xs text-steel mt-3">
               Every line links to the full box score.
             </p>
           </section>

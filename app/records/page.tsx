@@ -25,7 +25,7 @@ export default async function RecordsPage() {
   const TeamLink = ({ id, name }: { id: number; name: string }) => (
     <Link
       href={`/franchises/${slugOf.get(id) ?? ""}`}
-      className="text-cream hover:text-amber"
+      className="text-ice hover:text-volt"
     >
       {name}
     </Link>
@@ -41,9 +41,9 @@ export default async function RecordsPage() {
     slugOf: Record<string, string>;
   }) => {
     const slug = id != null ? slugOf[id] : undefined;
-    if (!slug) return <span className="text-cream">{name}</span>;
+    if (!slug) return <span className="text-ice">{name}</span>;
     return (
-      <Link href={`/players/${slug}`} className="text-cream hover:text-amber">
+      <Link href={`/players/${slug}`} className="text-ice hover:text-volt">
         {name}
       </Link>
     );
@@ -57,14 +57,14 @@ export default async function RecordsPage() {
       <li className="flex flex-wrap justify-between gap-x-3 gap-y-1">
         <span>
           <TeamLink id={winner.id} name={winner.name} />{" "}
-          <span className="text-parch">
+          <span className="text-steel">
             {winner.pts.toFixed(2)}–{loser.pts.toFixed(2)}
           </span>{" "}
           <TeamLink id={loser.id} name={loser.name} />
         </span>
-        <span className="text-parch">
+        <span className="text-steel">
           by {margin.toFixed(2)} ·{" "}
-          <Link href={`/seasons/${g.year}`} className="text-amber underline underline-offset-4 hover:no-underline">
+          <Link href={`/seasons/${g.year}`} className="text-volt underline underline-offset-4 hover:no-underline">
             {g.year}
           </Link>{" "}
           wk {g.week}
@@ -75,8 +75,8 @@ export default async function RecordsPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-cream mb-2 scrawl">The Record Book</h1>
-      <p className="text-parch mb-6 max-w-2xl">
+      <h1 className="font-display text-3xl text-ice mb-2 scrawl">The Record Book</h1>
+      <p className="text-steel mb-6 max-w-2xl">
         {derived.totals.games.toLocaleString("en-US")} games and{" "}
         {derived.totals.playerPerformances.toLocaleString("en-US")} player
         performances across {derived.totals.seasons} seasons, distilled to the
@@ -98,7 +98,7 @@ export default async function RecordsPage() {
             <li key={href}>
               <a
                 href={href}
-                className="block px-3 py-2 rounded border border-edge text-parch hover:text-amber hover:border-amber transition-colors"
+                className="block px-3 py-2 rounded border border-edge text-steel hover:text-volt hover:border-volt transition-colors"
               >
                 {label}
               </a>
@@ -114,17 +114,17 @@ export default async function RecordsPage() {
             {r.highWeeks.map((w, i) => (
               <li key={i} className="flex justify-between gap-3">
                 <span>
-                  <span className="text-parch">{i + 1}.</span>{" "}
+                  <span className="text-steel">{i + 1}.</span>{" "}
                   <TeamLink id={w.id} name={w.name} />{" "}
-                  <span className="text-parch">
+                  <span className="text-steel">
                     vs {w.vs},{" "}
-                    <Link href={`/seasons/${w.year}`} className="text-amber underline underline-offset-4 hover:no-underline">
+                    <Link href={`/seasons/${w.year}`} className="text-volt underline underline-offset-4 hover:no-underline">
                       {w.year}
                     </Link>{" "}
                     wk {w.week}
                   </span>
                 </span>
-                <span className="text-amber font-semibold">{w.pts.toFixed(2)}</span>
+                <span className="text-volt font-semibold">{w.pts.toFixed(2)}</span>
               </li>
             ))}
           </ol>
@@ -136,11 +136,11 @@ export default async function RecordsPage() {
             {r.lowWeeks.map((w, i) => (
               <li key={i} className="flex justify-between gap-3">
                 <span>
-                  <span className="text-parch">{i + 1}.</span>{" "}
+                  <span className="text-steel">{i + 1}.</span>{" "}
                   <TeamLink id={w.id} name={w.name} />{" "}
-                  <span className="text-parch">
+                  <span className="text-steel">
                     vs {w.vs},{" "}
-                    <Link href={`/seasons/${w.year}`} className="text-amber underline underline-offset-4 hover:no-underline">
+                    <Link href={`/seasons/${w.year}`} className="text-volt underline underline-offset-4 hover:no-underline">
                       {w.year}
                     </Link>{" "}
                     wk {w.week}
@@ -176,17 +176,17 @@ export default async function RecordsPage() {
             {r.playerHighs.slice(0, 15).map((p, i) => (
               <li key={i} className="flex justify-between gap-3">
                 <span>
-                  <span className="text-parch">{i + 1}.</span>{" "}
+                  <span className="text-steel">{i + 1}.</span>{" "}
                   <PlayerLink id={p.playerId} name={p.player} slugOf={slugOfPlayer} />{" "}
-                  <span className="text-parch">
+                  <span className="text-steel">
                     {p.pos} · for {p.team},{" "}
-                    <Link href={`/seasons/${p.year}`} className="text-amber underline underline-offset-4 hover:no-underline">
+                    <Link href={`/seasons/${p.year}`} className="text-volt underline underline-offset-4 hover:no-underline">
                       {p.year}
                     </Link>{" "}
                     wk {p.week}
                   </span>
                 </span>
-                <span className="text-amber font-semibold">{p.pts.toFixed(2)}</span>
+                <span className="text-volt font-semibold">{p.pts.toFixed(2)}</span>
               </li>
             ))}
           </ol>
@@ -194,18 +194,18 @@ export default async function RecordsPage() {
 
         <section id="bench" className="scroll-mt-4">
           <h2 className="plate mb-3">Left on the Bench</h2>
-          <p className="text-xs text-parch mb-2">
+          <p className="text-xs text-steel mb-2">
             The biggest games ever scored by a player whose manager sat him.
           </p>
           <ol className="panel p-4 space-y-2 text-sm taped tilt-r mt-3">
             {r.benchTragedies.map((p, i) => (
               <li key={i} className="flex justify-between gap-3">
                 <span>
-                  <span className="text-parch">{i + 1}.</span>{" "}
+                  <span className="text-steel">{i + 1}.</span>{" "}
                   <PlayerLink id={p.playerId} name={p.player} slugOf={slugOfPlayer} />{" "}
-                  <span className="text-parch">
+                  <span className="text-steel">
                     {p.pos} · benched by {p.team},{" "}
-                    <Link href={`/seasons/${p.year}`} className="text-amber underline underline-offset-4 hover:no-underline">
+                    <Link href={`/seasons/${p.year}`} className="text-volt underline underline-offset-4 hover:no-underline">
                       {p.year}
                     </Link>{" "}
                     wk {p.week}
@@ -223,16 +223,16 @@ export default async function RecordsPage() {
             {r.seasonPF.map((s, i) => (
               <li key={i} className="flex justify-between gap-3">
                 <span>
-                  <span className="text-parch">{i + 1}.</span>{" "}
+                  <span className="text-steel">{i + 1}.</span>{" "}
                   <TeamLink id={s.id} name={s.name} />{" "}
-                  <span className="text-parch">
+                  <span className="text-steel">
                     {s.record},{" "}
-                    <Link href={`/seasons/${s.year}`} className="text-amber underline underline-offset-4 hover:no-underline">
+                    <Link href={`/seasons/${s.year}`} className="text-volt underline underline-offset-4 hover:no-underline">
                       {s.year}
                     </Link>
                   </span>
                 </span>
-                <span className="text-amber font-semibold">{s.pf}</span>
+                <span className="text-volt font-semibold">{s.pf}</span>
               </li>
             ))}
           </ol>
@@ -245,7 +245,7 @@ export default async function RecordsPage() {
               <li key={i} className="flex justify-between gap-3">
                 <span>
                   <TeamLink id={s.id} name={nameOf.get(s.id) ?? "Unknown"} />{" "}
-                  <span className="text-parch">
+                  <span className="text-steel">
                     {s.from.year} wk {s.from.week} to {s.to.year} wk {s.to.week}
                   </span>
                 </span>
@@ -268,15 +268,15 @@ export default async function RecordsPage() {
                   <li key={i} className="flex justify-between gap-3">
                     <span>
                       <PlayerLink id={p.playerId} name={p.player} slugOf={slugOfPlayer} />{" "}
-                      <span className="text-parch">
+                      <span className="text-steel">
                         for {p.team},{" "}
-                        <Link href={`/seasons/${p.year}`} className="text-amber underline underline-offset-4 hover:no-underline">
+                        <Link href={`/seasons/${p.year}`} className="text-volt underline underline-offset-4 hover:no-underline">
                           {p.year}
                         </Link>{" "}
                         wk {p.week}
                       </span>
                     </span>
-                    <span className="text-amber font-semibold">
+                    <span className="text-volt font-semibold">
                       {p.pts.toFixed(2)}
                     </span>
                   </li>

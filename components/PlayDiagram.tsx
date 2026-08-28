@@ -1,5 +1,5 @@
 // The chalkboard play behind the tap room title: O's running routes against
-// X's, one route in amber because that guy is open. Pure decoration
+// X's, one route in volt because that guy is open. Pure decoration
 // (aria-hidden), drawn inline so it costs no request. Static; nothing moves.
 // width/height are stated because a viewBox alone has no intrinsic size and
 // Safari falls back to 150px (glaze.md failure log).
@@ -27,8 +27,8 @@ export default function PlayDiagram({ className }: { className?: string }) {
         <path d="M140 128 q6 -44 -20 -66" strokeDasharray="6 7" />
         <path d="M252 120 q2 -34 30 -52" strokeDasharray="6 7" />
       </g>
-      {/* the open man, in amber */}
-      <g stroke="var(--color-amber)" strokeWidth="3" fill="none" strokeLinecap="round" opacity="0.85">
+      {/* the open man, in volt */}
+      <g stroke="var(--color-volt)" strokeWidth="3" fill="none" strokeLinecap="round" opacity="0.85">
         <circle cx="196" cy="146" r="10" />
         <path d="M196 134 q-4 -40 22 -58 q20 -14 44 -10" strokeDasharray="7 8" />
         <path d="M254 60 l12 4 l-9 9" />

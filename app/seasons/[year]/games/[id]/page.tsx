@@ -54,19 +54,19 @@ function PlayerCell({
   won: boolean;
   slug: string | undefined;
 }) {
-  if (!p) return <td className="px-3 py-1.5 text-parch" colSpan={2}>–</td>;
-  const tone = won ? "text-cream" : "text-parch";
+  if (!p) return <td className="px-3 py-1.5 text-steel" colSpan={2}>–</td>;
+  const tone = won ? "text-ice" : "text-steel";
   return (
     <>
       <td className={`px-3 py-1.5 ${tone}`}>
         {slug ? (
-          <Link href={`/players/${slug}`} className={`${tone} hover:text-amber`}>
+          <Link href={`/players/${slug}`} className={`${tone} hover:text-volt`}>
             {p.name}
           </Link>
         ) : (
           p.name
         )}{" "}
-        <span className="text-parch text-xs">{p.pos}</span>
+        <span className="text-steel text-xs">{p.pos}</span>
       </td>
       <td className={`px-3 py-1.5 text-right ${tone}`}>
         {p.pts === null ? "–" : p.pts.toFixed(2)}
@@ -118,7 +118,7 @@ export default async function GamePage({
       <p className="text-sm mb-4">
         <Link
           href={`/seasons/${year}`}
-          className="text-amber underline underline-offset-4 hover:no-underline"
+          className="text-volt underline underline-offset-4 hover:no-underline"
         >
           ← {year} season
         </Link>
@@ -128,17 +128,17 @@ export default async function GamePage({
         <p className="plate mb-2">
           Week {box.week} · {year}
           {live && <span className="text-win"> · live, refreshes each minute</span>}
-          {pregame && <span className="text-parch"> · not kicked off yet</span>}
+          {pregame && <span className="text-steel"> · not kicked off yet</span>}
         </p>
         <div className="flex flex-wrap items-baseline gap-x-6 gap-y-3">
-          <p className={`font-display text-2xl ${awayWon ? "text-amber glow" : "text-cream"}`}>
+          <p className={`font-display text-2xl ${awayWon ? "text-volt glow" : "text-ice"}`}>
             {box.away.name}{" "}
             <span className={`text-3xl ${awayWon ? "circled" : ""}`}>
               {box.away.pts?.toFixed(2) ?? "–"}
             </span>
           </p>
-          <p className="text-parch">at</p>
-          <p className={`font-display text-2xl ${homeWon ? "text-amber glow" : "text-cream"}`}>
+          <p className="text-steel">at</p>
+          <p className={`font-display text-2xl ${homeWon ? "text-volt glow" : "text-ice"}`}>
             {box.home.name}{" "}
             <span className={`text-3xl ${homeWon ? "circled" : ""}`}>
               {box.home.pts?.toFixed(2) ?? "–"}
@@ -154,7 +154,7 @@ export default async function GamePage({
             <div className="panel overflow-x-auto" tabIndex={0} role="region" aria-label={`${group.label} box score`}>
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="text-left text-parch border-b border-edge">
+                  <tr className="text-left text-steel border-b border-edge">
                     <th className="px-3 py-2 font-normal">{box.away.name}</th>
                     <th className="px-3 py-2 font-normal text-right">Pts</th>
                     <th className="px-3 py-2 font-normal w-12 text-center">Slot</th>
@@ -170,7 +170,7 @@ export default async function GamePage({
                         won={awayWon}
                         slug={slot.away?.id != null ? slugOfPlayer[slot.away.id] : undefined}
                       />
-                      <td className="px-3 py-1.5 text-center text-xs text-amber">
+                      <td className="px-3 py-1.5 text-center text-xs text-volt">
                         {slot.label}
                       </td>
                       <PlayerCell
@@ -195,7 +195,7 @@ export default async function GamePage({
               <li key={g.id}>
                 <Link
                   href={`/seasons/${year}/games/${g.id}`}
-                  className="block px-3 py-2 rounded border border-edge text-parch hover:text-amber hover:border-amber transition-colors"
+                  className="block px-3 py-2 rounded border border-edge text-steel hover:text-volt hover:border-volt transition-colors"
                 >
                   {g.away} at {g.home}
                 </Link>
@@ -206,7 +206,7 @@ export default async function GamePage({
       )}
 
       {year < CURRENT_SEASON && (
-        <p className="text-xs text-parch mt-6">
+        <p className="text-xs text-steel mt-6">
           Player NFL teams are omitted on purpose: Fleaflicker reports each
           player&apos;s current team, not the team they played for in {year}.
         </p>

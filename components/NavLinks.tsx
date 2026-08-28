@@ -32,8 +32,8 @@ export default function NavLinks() {
               aria-current={active ? "page" : undefined}
               className={`block px-3 py-3 border-b-2 transition-colors ${
                 active
-                  ? "text-amber border-amber"
-                  : "text-parch border-transparent hover:text-amber hover:border-amber"
+                  ? "text-volt border-volt"
+                  : "text-steel border-transparent hover:text-volt hover:border-volt"
               }`}
             >
               {item.label}
