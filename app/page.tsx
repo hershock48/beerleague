@@ -3,6 +3,7 @@ import Link from "next/link";
 import LiveScoreboard from "@/components/LiveScoreboard";
 import NewsFeed from "@/components/NewsFeed";
 import PlayDiagram from "@/components/PlayDiagram";
+import YourStool, { type StoolTeam } from "@/components/YourStool";
 import { getScoreboard, getStandings, getTransactions } from "@/lib/live";
 import { getNews, getTrending } from "@/lib/news";
 import { getDerived } from "@/lib/archive";
@@ -115,6 +116,23 @@ export default async function Home() {
     ) ?? [];
   const lastChampSeason = derived.seasons.find((s) => s.champion) ?? null;
 
+  const gameOf = new Map<number, string>();
+  for (const g of board?.games ?? []) {
+    gameOf.set(g.away.id, String(g.id));
+    gameOf.set(g.home.id, String(g.id));
+  }
+  const stoolTeams: StoolTeam[] = teams.map((t) => {
+    const f = derived.franchises[t.id];
+    return {
+      id: t.id,
+      name: t.name,
+      slug: f?.slug ?? "",
+      record: f ? `${f.career.w}-${f.career.l}${f.career.t > 0 ? `-${f.career.t}` : ""}` : "0-0",
+      titles: f?.championships.length ?? 0,
+      gameId: gameOf.get(t.id) ?? null,
+    };
+  });
+
   return (
     <div className="space-y-12">
       <section>
@@ -136,6 +154,7 @@ export default async function Home() {
           </div>
           <PlayDiagram className="hidden md:block w-56 h-auto shrink-0 -mt-3" />
         </div>
+        {stoolTeams.length > 0 && <YourStool teams={stoolTeams} />}
         {board ? (
           <LiveScoreboard initial={board} week={week} />
         ) : (

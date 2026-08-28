@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getDerived, type DerivedGame } from "@/lib/archive";
+import { getPlayerSlugMap } from "@/lib/players";
 
 export const metadata: Metadata = {
   title: "Record Book",
@@ -9,7 +10,10 @@ export const metadata: Metadata = {
 };
 
 export default async function RecordsPage() {
-  const derived = await getDerived();
+  const [derived, slugOfPlayer] = await Promise.all([
+    getDerived(),
+    getPlayerSlugMap(),
+  ]);
   const r = derived.records;
   const nameOf = new Map(
     Object.values(derived.franchises).map((f) => [f.id, f.currentName]),
@@ -26,6 +30,24 @@ export default async function RecordsPage() {
       {name}
     </Link>
   );
+
+  const PlayerLink = ({
+    id,
+    name,
+    slugOf,
+  }: {
+    id?: number;
+    name: string;
+    slugOf: Record<string, string>;
+  }) => {
+    const slug = id != null ? slugOf[id] : undefined;
+    if (!slug) return <span className="text-cream">{name}</span>;
+    return (
+      <Link href={`/players/${slug}`} className="text-cream hover:text-amber">
+        {name}
+      </Link>
+    );
+  };
 
   const GameLine = ({ g }: { g: DerivedGame }) => {
     const margin = Math.abs(g.away.pts - g.home.pts);
@@ -155,7 +177,7 @@ export default async function RecordsPage() {
               <li key={i} className="flex justify-between gap-3">
                 <span>
                   <span className="text-parch">{i + 1}.</span>{" "}
-                  <span className="text-cream">{p.player}</span>{" "}
+                  <PlayerLink id={p.playerId} name={p.player} slugOf={slugOfPlayer} />{" "}
                   <span className="text-parch">
                     {p.pos} · for {p.team},{" "}
                     <Link href={`/seasons/${p.year}`} className="text-amber underline underline-offset-4 hover:no-underline">
@@ -180,7 +202,7 @@ export default async function RecordsPage() {
               <li key={i} className="flex justify-between gap-3">
                 <span>
                   <span className="text-parch">{i + 1}.</span>{" "}
-                  <span className="text-cream">{p.player}</span>{" "}
+                  <PlayerLink id={p.playerId} name={p.player} slugOf={slugOfPlayer} />{" "}
                   <span className="text-parch">
                     {p.pos} · benched by {p.team},{" "}
                     <Link href={`/seasons/${p.year}`} className="text-amber underline underline-offset-4 hover:no-underline">
@@ -245,7 +267,7 @@ export default async function RecordsPage() {
                 {list.map((p, i) => (
                   <li key={i} className="flex justify-between gap-3">
                     <span>
-                      <span className="text-cream">{p.player}</span>{" "}
+                      <PlayerLink id={p.playerId} name={p.player} slugOf={slugOfPlayer} />{" "}
                       <span className="text-parch">
                         for {p.team},{" "}
                         <Link href={`/seasons/${p.year}`} className="text-amber underline underline-offset-4 hover:no-underline">

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getDerived, getSeasonGames, getArchivedBox } from "@/lib/archive";
 import { getLiveBoxRaw, getScoreboard } from "@/lib/live";
+import { getPlayerSlugMap } from "@/lib/players";
 import { normalizeBox, type BoxScore, type BoxPlayer } from "@/lib/box";
 import { CURRENT_SEASON } from "@/lib/league";
 
@@ -44,14 +45,30 @@ export async function generateMetadata({
   };
 }
 
-function PlayerCell({ p, won }: { p: BoxPlayer | null; won: boolean }) {
+function PlayerCell({
+  p,
+  won,
+  slug,
+}: {
+  p: BoxPlayer | null;
+  won: boolean;
+  slug: string | undefined;
+}) {
   if (!p) return <td className="px-3 py-1.5 text-parch" colSpan={2}>–</td>;
+  const tone = won ? "text-cream" : "text-parch";
   return (
     <>
-      <td className={`px-3 py-1.5 ${won ? "text-cream" : "text-parch"}`}>
-        {p.name} <span className="text-parch text-xs">{p.pos}</span>
+      <td className={`px-3 py-1.5 ${tone}`}>
+        {slug ? (
+          <Link href={`/players/${slug}`} className={`${tone} hover:text-amber`}>
+            {p.name}
+          </Link>
+        ) : (
+          p.name
+        )}{" "}
+        <span className="text-parch text-xs">{p.pos}</span>
       </td>
-      <td className={`px-3 py-1.5 text-right ${won ? "text-cream" : "text-parch"}`}>
+      <td className={`px-3 py-1.5 text-right ${tone}`}>
         {p.pts === null ? "–" : p.pts.toFixed(2)}
       </td>
     </>
@@ -66,7 +83,10 @@ export default async function GamePage({
   const { year: yearParam, id } = await params;
   const year = Number(yearParam);
   if (!Number.isInteger(year)) notFound();
-  const box = await loadBox(year, id);
+  const [box, slugOfPlayer] = await Promise.all([
+    loadBox(year, id),
+    getPlayerSlugMap(),
+  ]);
   if (!box) notFound();
 
   const awayWon = (box.away.pts ?? 0) > (box.home.pts ?? 0);
@@ -145,11 +165,19 @@ export default async function GamePage({
                 <tbody>
                   {group.slots.map((slot, i) => (
                     <tr key={i} className="border-b border-edge last:border-0">
-                      <PlayerCell p={slot.away} won={awayWon} />
+                      <PlayerCell
+                        p={slot.away}
+                        won={awayWon}
+                        slug={slot.away?.id != null ? slugOfPlayer[slot.away.id] : undefined}
+                      />
                       <td className="px-3 py-1.5 text-center text-xs text-amber">
                         {slot.label}
                       </td>
-                      <PlayerCell p={slot.home} won={homeWon} />
+                      <PlayerCell
+                        p={slot.home}
+                        won={homeWon}
+                        slug={slot.home?.id != null ? slugOfPlayer[slot.home.id] : undefined}
+                      />
                     </tr>
                   ))}
                 </tbody>

@@ -69,3 +69,25 @@ export async function getPlayerIndex(): Promise<PlayerIndexRow[]> {
 export async function getPlayer(slug: string): Promise<PlayerDetail | null> {
   return (await load()).players[slug] ?? null;
 }
+
+// The slim id -> slug map IS traced into the serverless bundle (see
+// next.config.ts), so unlike everything above it is safe at request time.
+// Live game pages use it to link players.
+let slugCache: Record<string, string> | null = null;
+
+export async function getPlayerSlugMap(): Promise<Record<string, string>> {
+  if (!slugCache) {
+    try {
+      slugCache = JSON.parse(
+        await readFile(
+          path.join(process.cwd(), "data", "player-slugs.json"),
+          "utf8",
+        ),
+      ) as Record<string, string>;
+    } catch {
+      // A live page without the map still renders, just without player links.
+      slugCache = {};
+    }
+  }
+  return slugCache;
+}

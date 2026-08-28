@@ -91,6 +91,7 @@ export interface TeamWeek {
 export interface PlayerGame {
   year: number;
   week: number;
+  playerId?: number;
   player: string;
   pos: string;
   pts: number;

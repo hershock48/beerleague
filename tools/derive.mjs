@@ -159,6 +159,7 @@ async function main() {
               if (!p?.proPlayer || pts === undefined || pts === null) continue;
               const entry = {
                 year, week: box.week,
+                playerId: p.proPlayer.id,
                 player: p.proPlayer.nameFull,
                 pos: p.proPlayer.position,
                 pts,

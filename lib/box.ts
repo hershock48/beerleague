@@ -5,6 +5,7 @@
 // that disagree about the same game.
 
 export interface BoxPlayer {
+  id: number | null;
   name: string;
   pos: string;
   pts: number | null;
@@ -30,7 +31,7 @@ export interface BoxScore {
 }
 
 interface RawSide {
-  proPlayer?: { nameFull?: string; position?: string };
+  proPlayer?: { id?: number; nameFull?: string; position?: string };
   viewingActualPoints?: { value?: number };
 }
 
@@ -53,6 +54,7 @@ interface RawBox {
 function side(raw: RawSide | undefined): BoxPlayer | null {
   if (!raw?.proPlayer?.nameFull) return null;
   return {
+    id: raw.proPlayer.id ?? null,
     name: raw.proPlayer.nameFull,
     pos: raw.proPlayer.position ?? "",
     pts: raw.viewingActualPoints?.value ?? null,

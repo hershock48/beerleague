@@ -118,7 +118,14 @@ async function main() {
     path.join(DATA, "players.json"),
     JSON.stringify({ index, players: detail }),
   );
-  console.log(`players.json: ${list.length} players`);
+
+  // A slim proPlayer.id -> slug map, written separately because it IS traced
+  // into the serverless bundle (next.config.ts): live game pages need it at
+  // request time to link players, and the full players.json is 50x larger.
+  const slugById = {};
+  for (const p of list) slugById[p.id] = p.slug;
+  await writeFile(path.join(DATA, "player-slugs.json"), JSON.stringify(slugById));
+  console.log(`players.json: ${list.length} players (+ player-slugs.json)`);
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });
